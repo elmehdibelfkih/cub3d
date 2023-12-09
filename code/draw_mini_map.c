@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:12:29 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/07 18:33:03 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/09 00:58:46 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void put_mini_map(t_map *map, mlx_image_t* img)
 		}
 		y++;
 	}
-	
+	// mlx_get_monitor_size
 }
 
 // void	put_player(int x, int y, int size, t_map *map, mlx_image_t* img)
@@ -99,3 +99,8 @@ void put_area(int x_start, int y_start, int size, int color, mlx_image_t* img)
 	}
 	return ;
 }
+
+// void player_p(int *x, int *y)
+// {
+// 	int i;
+// }

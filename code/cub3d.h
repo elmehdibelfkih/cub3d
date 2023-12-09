@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/06 20:20:46 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/09 23:25:05 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,29 @@
 # include "../libft/libft.h"
 
 typedef struct s_player {
-	float	x; // youssef 
-	float	y; // youssef
-	int		mv;
-	int		rt;
-	float	rad_current_view; // youssef
-	int		view_angle;
-	int		score;
-	int		mv_speed;
-	int		rt_speed;
+	int		x; // youssef
+	int		y; // youssef
+	int		mv; // 0 
+	int		rt; // 0
+	float	rad_current_view; // M_PI / 2  || 0 || 3M_PY/3 || M_PI
+	int		view_angle; // 60
+	int		score; // 0
+	int		mv_speed; // 3
+	int		rt_speed; // 2 * (M_P1 / 180)
 }t_player;
 
 typedef struct s_map {
 	t_player		*player;
-	// mlx_image_t*	N_texture; // mehdi
-	// mlx_image_t*	S_texture; // mehdi
-	// mlx_image_t*	W_texture; // mehdi
-	// mlx_image_t*	E_texture; // mehdi
-	char*			N_texture; // youssef
-	char*			S_texture; // youssef
-	char*			W_texture; // youssef
-	char*			E_texture; // youssef
+	mlx_image_t*	N_texture; // youssef
+	mlx_image_t*	S_texture; // youssef
+	mlx_image_t*	W_texture; // youssef
+	mlx_image_t*	E_texture; // youssef
 	char			**map; // youssef
-	int				max_screen_height; // mehdi
-	int				max_screen_width; // mehdi
+	int				max_height;
+	int				max_width;
 	int				map_height; // youssef
 	int				map_width; // youssef
-	int				block_size;
+	int				block_size; // 60
 	int				floor_color[3]; // youssef
 	int				ceiling_color[3]; // youssef
 	mlx_t*			mlx ;

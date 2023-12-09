@@ -1,6 +1,0 @@
-MLX42.Window.Basic 2 0.048555
-MLX42.Window.SingleImage 2 0.0442223
-MLX42.Window.MultipleImages 2 0.0459568
-MLX42.Window.stringTortureTest 2 3.67359
-MLX42.MWindow.Settings 2 0.0528548
----
