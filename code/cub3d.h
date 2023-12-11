@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/09 23:25:05 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/11 06:18:41 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct s_player {
 	float	rad_current_view; // M_PI / 2  || 0 || 3M_PY/3 || M_PI
 	int		view_angle; // 60
 	int		score; // 0
-	int		mv_speed; // 3
-	int		rt_speed; // 2 * (M_P1 / 180)
+	float		mv_speed; // 3
+	float		rt_speed; // 2 * (M_P1 / 180)
 }t_player;
 
 typedef struct s_map {
@@ -42,6 +42,7 @@ typedef struct s_map {
 	mlx_image_t*	S_texture; // youssef
 	mlx_image_t*	W_texture; // youssef
 	mlx_image_t*	E_texture; // youssef
+	mlx_image_t* 	mini_map;
 	char			**map; // youssef
 	int				max_height;
 	int				max_width;
@@ -57,5 +58,7 @@ typedef struct s_map {
 void put_mini_map(t_map *map, mlx_image_t* img);
 void put_area(int x, int y, int size, int color, mlx_image_t* img);
 void	put_player(int x, int y, int size, t_map *map, mlx_image_t* img);
+void put_der(t_map *map);
+void	player_ang(t_player *player);
 
 #endif
