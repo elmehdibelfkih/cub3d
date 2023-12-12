@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/11 06:18:41 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/12 06:52:33 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,23 @@ typedef struct s_player {
 	float		rt_speed; // 2 * (M_P1 / 180)
 }t_player;
 
+typedef struct s_mini_map {
+	mlx_image_t* 	img;
+	int		mini_block;
+	int		map_height;
+	int		map_width;
+	int		x;
+	int		y;
+
+}t_mini_map;
+
 typedef struct s_map {
 	t_player		*player;
+	t_mini_map*		mini_map;
 	mlx_image_t*	N_texture; // youssef
 	mlx_image_t*	S_texture; // youssef
 	mlx_image_t*	W_texture; // youssef
 	mlx_image_t*	E_texture; // youssef
-	mlx_image_t* 	mini_map;
 	char			**map; // youssef
 	int				max_height;
 	int				max_width;
@@ -51,14 +61,17 @@ typedef struct s_map {
 	int				block_size; // 60
 	int				floor_color[3]; // youssef
 	int				ceiling_color[3]; // youssef
-	mlx_t*			mlx ;
+	mlx_t*			mlx;
 
 }t_map;
 
-void put_mini_map(t_map *map, mlx_image_t* img);
-void put_area(int x, int y, int size, int color, mlx_image_t* img);
-void	put_player(int x, int y, int size, t_map *map, mlx_image_t* img);
-void put_der(t_map *map);
+void	put_mini_map(t_map *map);
+void	put_area(int x, int y, int size, int color, mlx_image_t* img);
+void	put_player(int x, int y, int size, t_map *map);
+void	put_der(t_map *map);
 void	player_ang(t_player *player);
+void	put_mini_map_limits(t_mini_map *mini_map);
+void	put_line(float x, float y, float rt_ang, int len, mlx_image_t* img);
+bool	is_wall(t_map* map, int x, int y);
 
 #endif

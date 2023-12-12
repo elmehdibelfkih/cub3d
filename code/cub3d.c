@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/11 06:38:44 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/12 06:23:23 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,33 @@ static void ft_hook(void* param)
 	if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(map->mlx);
 	if (mlx_is_key_down(map->mlx, MLX_KEY_UP))
+	{
 		map->player->mv = 1;
+		player_ang(map->player);
+		put_mini_map(map);
+
+	}
 	if (mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
+	{
 		map->player->mv = -1;
+		player_ang(map->player);
+		put_mini_map(map);
+
+	}
 	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT))
+	{
 		map->player->rt = -1;
+		player_ang(map->player);
+		put_mini_map(map);
+
+	}
 	if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT))
+	{
 		map->player->rt = 1;
-	player_ang(map->player);
-	put_mini_map(map, map->mini_map);
+		player_ang(map->player);
+		put_mini_map(map);
+
+	}
 		
 }
 
@@ -59,6 +77,7 @@ int32_t	main(void)
 {
 	t_map map;
 	t_player player;
+	t_mini_map minimap;
 	
 	char **ma;
 
@@ -78,7 +97,9 @@ int32_t	main(void)
 	ma[12] = ft_strdup("   11110111011101000111101000001");
 	ma[13] = ft_strdup("10101010101010101010101010101010101");
 	// ma[13] = ft_strdup("     1111 111 1111111  111111111");
+		// printf("HI\n");
 	map.player = &player;
+	map.mini_map = &minimap;
 	ma[14] = NULL;
 	map.block_size = 100;
 	map.map = ma;
@@ -92,13 +113,19 @@ int32_t	main(void)
 	map.player->rad_current_view = M_PI;
 	map.player->mv = -1;
 	map.player->rt = -1;
+	map.mini_map->mini_block = 20;
+	map.mini_map->x = 7;
+	map.mini_map->y = 5;
+	map.mini_map->map_height = map.mini_map->y * map.mini_map->mini_block;
+	map.mini_map->map_width = map.mini_map->x * map.mini_map->mini_block;
+
 	mlx_get_monitor_size(0, &map.max_width, &map.max_height);
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
 	if (!mlx)
 		ft_error();
 	map.mlx = mlx;
-	map.mini_map = mlx_new_image(mlx, 1800, 900);
-	if (!map.mini_map || (mlx_image_to_window(mlx, map.mini_map, 0, 0) < 0))
+	map.mini_map->img = mlx_new_image(mlx, 1800, 900);
+	if (!map.mini_map->img || (mlx_image_to_window(mlx, map.mini_map->img, 0, 0) < 0))
 		ft_error();
 	// put_mini_map(&map, map.mini_map);
 	mlx_loop_hook(mlx, ft_hook, (void *)&map);

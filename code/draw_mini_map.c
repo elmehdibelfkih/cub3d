@@ -6,41 +6,78 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:12:29 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/11 06:52:03 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/12 07:05:19 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void put_mini_map(t_map *map, mlx_image_t* img)
+void put_mini_map(t_map *map)
 {
-	int y;
-	int x;
-	int x_s;
-	int y_s;
+	float x;
+	float y;
+	float x_p;
+	float y_p;
 
-	y = 0;
 	x = 0;
-	y_s = map->player->y/100 - 8;
-	x_s = map->player->x/100 - 8;
-	while (map->map[y_s] && y_s <= map->player->y/100 + 8)
+	while (x < map->mini_map->map_width)
 	{
-		x_s = map->player->x/100 - 8;;
-		x = 0;
-		while (map->map[y_s][x_s] && x_s <= map->player->x/100 + 8)
+		y = 0;
+		while (y < map->mini_map->map_height)
 		{
-			if (map->map[y_s][x_s] == '1')
-				put_area(x*10 , y*10, 20, 180, img);
-			else if (map->map[y_s][x_s] == '0')
-				put_area(x*10, y*10, 20, 60, img);
-			x++;
-			x_s++;
+			x_p = map->player->x - (map->block_size * x / map->mini_map->mini_block);
+			y_p = map->player->y - (map->block_size * y / map->mini_map->mini_block);
+			if (is_wall(map, x_p, y_p))
+				mlx_put_pixel(map->mini_map->img, x, y, 255);
+			else
+				mlx_put_pixel(map->mini_map->img, x, y, 0);
+			y++;
 		}
-		y_s++;
-		y++;
+		x++;
 	}
-	put_area(map->player->x/100 - 2, map->player->x/100 - 2, 5, 0, img);
+	
+	put_mini_map_limits(map->mini_map);
 	put_der(map);
+}
+
+void put_mini_map_limits(t_mini_map *mini_map)
+{
+	int i;
+
+	i = 0;
+	put_line(0, mini_map->map_height, 0, mini_map->map_width, mini_map->img);
+	put_line(mini_map->map_width, 0, M_PI/2 ,mini_map->map_height, mini_map->img);
+	put_line(0, mini_map->map_height + 1, 0, mini_map->map_width, mini_map->img);
+	put_line(mini_map->map_width + 1, 0, M_PI/2 ,mini_map->map_height + 1, mini_map->img);
+
+	put_area(mini_map->map_width/2 - 2, mini_map->map_height/2 - 2, 5, 255, mini_map->img);
+	
+}
+
+void put_line(float x, float y, float rt_ang, int len, mlx_image_t* img)
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		x += cos(rt_ang);
+		y += sin(rt_ang);
+		i++;
+		mlx_put_pixel(img, x, y, 255);
+		// printf("%f\n", x);
+	}
+}
+
+bool	is_wall(t_map* map, int x, int y)
+{
+	int j = x/map->block_size;
+	int i = y/map->block_size;
+
+	if (map->map[i][j] == '1')
+		return (true);
+	else
+		return (false);
 }
 
 void put_der(t_map *map)
@@ -48,24 +85,17 @@ void put_der(t_map *map)
 	float x;
 	float y;
 	int i = 1;
-	x = map->player->x/100;
-	y = map->player->y/100;
+	x = map->mini_map->map_width/2;
+	y = map->mini_map->map_height/2;
 
 	while (i < 11)
 	{
-		x += cos(map->player->rad_current_view) * 1;
-		y += sin(map->player->rad_current_view) * 1;
+		x += cos(map->player->rad_current_view);
+		y += sin(map->player->rad_current_view);
 		i++;
-		mlx_put_pixel(map->mini_map, x, y, 0);
+		mlx_put_pixel(map->mini_map->img, x, y, 255);
 	}
 	
-}
-
-void player_mv(t_player *player)
-{
-	player->x += player->mv*player->mv_speed;
-	player->mv = 0;
-
 }
 
 void put_area(int x_start, int y_start, int size, int color, mlx_image_t* img)
@@ -89,8 +119,3 @@ void put_area(int x_start, int y_start, int size, int color, mlx_image_t* img)
 	}
 	return ;
 }
-
-// void player_p(int *x, int *y)
-// {
-// 	int i;
-// }
