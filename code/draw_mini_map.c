@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:12:29 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/12 07:05:19 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:13:26 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ void put_mini_map(t_map *map)
 		y = 0;
 		while (y < map->mini_map->map_height)
 		{
-			x_p = map->player->x - (map->block_size * x / map->mini_map->mini_block);
-			y_p = map->player->y - (map->block_size * y / map->mini_map->mini_block);
-			if (is_wall(map, x_p, y_p))
+			x_p = map->player->x - (map->block_size * (map->mini_map->map_width/2 - x) / map->mini_map->mini_block);
+			y_p = map->player->y - (map->block_size * (map->mini_map->map_height/2 - y) / map->mini_map->mini_block);
+			if (is_wall(map, x_p, y_p) == 1)
 				mlx_put_pixel(map->mini_map->img, x, y, 255);
-			else
+			else if (is_wall(map, x_p, y_p) == 0)
+				mlx_put_pixel(map->mini_map->img, x, y, 80);
+			else 
 				mlx_put_pixel(map->mini_map->img, x, y, 0);
 			y++;
 		}
@@ -42,9 +44,6 @@ void put_mini_map(t_map *map)
 
 void put_mini_map_limits(t_mini_map *mini_map)
 {
-	int i;
-
-	i = 0;
 	put_line(0, mini_map->map_height, 0, mini_map->map_width, mini_map->img);
 	put_line(mini_map->map_width, 0, M_PI/2 ,mini_map->map_height, mini_map->img);
 	put_line(0, mini_map->map_height + 1, 0, mini_map->map_width, mini_map->img);
@@ -65,19 +64,23 @@ void put_line(float x, float y, float rt_ang, int len, mlx_image_t* img)
 		y += sin(rt_ang);
 		i++;
 		mlx_put_pixel(img, x, y, 255);
-		// printf("%f\n", x);
 	}
 }
 
-bool	is_wall(t_map* map, int x, int y)
+int	is_wall(t_map* map, int x, int y)
 {
 	int j = x/map->block_size;
 	int i = y/map->block_size;
-
+	
+	if (i < 0 || j < 0|| j >= map->map_height || i >= map->map_width)
+		return (3);
 	if (map->map[i][j] == '1')
-		return (true);
-	else
-		return (false);
+		return (1);
+	else if (map->map[i][j] == '0')
+		return (0);
+	else if (map->map[i][j] == ' ')
+		return (-1);
+	return (3);
 }
 
 void put_der(t_map *map)

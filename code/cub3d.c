@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/12 06:23:23 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/12 12:15:57 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,47 +30,48 @@ static void ft_hook(void* param)
 	if (mlx_is_key_down(map->mlx, MLX_KEY_UP))
 	{
 		map->player->mv = 1;
-		player_ang(map->player);
+		player_ang(map);
 		put_mini_map(map);
 
 	}
 	if (mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
 	{
 		map->player->mv = -1;
-		player_ang(map->player);
+		player_ang(map);
 		put_mini_map(map);
 
 	}
 	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT))
 	{
 		map->player->rt = -1;
-		player_ang(map->player);
+		player_ang(map);
 		put_mini_map(map);
 
 	}
 	if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT))
 	{
 		map->player->rt = 1;
-		player_ang(map->player);
+		player_ang(map);
 		put_mini_map(map);
 
 	}
 		
 }
 
-// void	player_mv(t_map *map)
-// {
-// 	map->player->x += map->player->mv_speed*map->player->mv;
-// 	map->player->y += map->player->mv_speed*map->player->mv;
-// }
-
-void	player_ang(t_player *player)
+void	player_ang(t_map *map)
 {
-	player->rad_current_view += player->rt_speed * player->rt;
-	player->rt = 0;
-	player->x += cos(player->rad_current_view) * player->mv * player->mv_speed;
-	player->y += sin(player->rad_current_view) * player->mv * player->mv_speed;
-	player->mv = 0;
+	float x;
+	float y;
+
+	map->player->rad_current_view += map->player->rt_speed * map->player->rt;
+	map->player->rt = 0;
+	x = cos(map->player->rad_current_view) * map->player->mv * map->player->mv_speed;
+	y = sin(map->player->rad_current_view) * map->player->mv * map->player->mv_speed;
+	if (x + map->player->x < 0 || y + map->player->y < 0 || is_wall(map, x + map->player->x, y + map->player->y) == 1 )
+		return ;
+	map->player->x += x;
+	map->player->y += y;
+	map->player->mv = 0;
 }
 
 int32_t	main(void)
@@ -82,22 +83,20 @@ int32_t	main(void)
 	char **ma;
 
 	ma = malloc(sizeof(char *)*15);
-	ma[0] =  ft_strdup("      11111 111   11111111  11111");
-	ma[1] =  ft_strdup("      100011101111100000011110001");
-	ma[2] =  ft_strdup("   111100000101000000000111111111");
-	ma[3] =  ft_strdup("   1000000000000000000001");
-	ma[4] =  ft_strdup("   1111111110110000011101111");
-	ma[5] =  ft_strdup("     110000001100000111011111111");
+	ma[0] =  ft_strdup("11111111111 111   11111111  11111");
+	ma[1] =  ft_strdup("10000100011101111100000011110001");
+	ma[2] =  ft_strdup("110011100000101000000000111111111");
+	ma[3] =  ft_strdup("100000000000000000000000000000001");
+	ma[4] =  ft_strdup("111111110110000000000000011101111");
+	ma[5] =  ft_strdup("10    110000001100000111011111111");
 	ma[6] =  ft_strdup("111111001111111101110000001000111");
-	ma[7] =  ft_strdup("111000011111111001100010011100001");
+	ma[7] =  ft_strdup("101000011111111001100010011100001");
 	ma[8] =  ft_strdup("111111100011010101110000001000111");
 	ma[9] =  ft_strdup("      10000000000001100000011001");
 	ma[10] = ft_strdup("   11110000000000001101010010001");
 	ma[11] = ft_strdup("   11000001010101011111001110001");
 	ma[12] = ft_strdup("   11110111011101000111101000001");
-	ma[13] = ft_strdup("10101010101010101010101010101010101");
-	// ma[13] = ft_strdup("     1111 111 1111111  111111111");
-		// printf("HI\n");
+	ma[13] = ft_strdup("10101010101010101010101010101011");
 	map.player = &player;
 	map.mini_map = &minimap;
 	ma[14] = NULL;
@@ -108,14 +107,14 @@ int32_t	main(void)
 	map.player->score = 0;
 	map.player->mv_speed = 3;
 	map.player->rt_speed = 3 * (M_PI / 180);
-	map.player->x = 11 * map.block_size	+ 50;
-	map.player->y = 11 * map.block_size + 50;
+	map.player->x = 1005;
+	map.player->y = 1005;
 	map.player->rad_current_view = M_PI;
 	map.player->mv = -1;
 	map.player->rt = -1;
 	map.mini_map->mini_block = 20;
-	map.mini_map->x = 7;
-	map.mini_map->y = 5;
+	map.mini_map->x = 11;
+	map.mini_map->y = 9;
 	map.mini_map->map_height = map.mini_map->y * map.mini_map->mini_block;
 	map.mini_map->map_width = map.mini_map->x * map.mini_map->mini_block;
 
@@ -127,10 +126,8 @@ int32_t	main(void)
 	map.mini_map->img = mlx_new_image(mlx, 1800, 900);
 	if (!map.mini_map->img || (mlx_image_to_window(mlx, map.mini_map->img, 0, 0) < 0))
 		ft_error();
-	// put_mini_map(&map, map.mini_map);
 	mlx_loop_hook(mlx, ft_hook, (void *)&map);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
-	// printf("%f\n", player.rad_current_view);
 	return (EXIT_SUCCESS);
 }

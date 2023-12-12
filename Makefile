@@ -6,15 +6,15 @@
 #    By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/14 10:59:06 by ebelfkih          #+#    #+#              #
-#    Updated: 2023/12/08 21:27:44 by ebelfkih         ###   ########.fr        #
+#    Updated: 2023/12/12 09:17:34 by ebelfkih         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 ONAME = cub3d.a 
 CC = cc -Wall -Werror -Wextra
-MLX_LIBFT = libft/libft.a MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm -L"/Users/$(USER)/.brew/opt/glfw/lib" #mac os
-# MLX_LIBFT = libft/libft.a MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm # linux os
+# MLX_LIBFT = libft/libft.a MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm -L"/Users/$(USER)/.brew/opt/glfw/lib" #mac os
+MLX_LIBFT = libft/libft.a MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm # linux os
 LIBFT = cd libft && make all
 RM = rm -f
 AR = ar rc
