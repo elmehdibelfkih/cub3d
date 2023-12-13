@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/12 10:34:40 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/13 04:42:00 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_player {
 }t_player;
 
 typedef struct s_mini_map {
-	mlx_image_t* 	img;
 	int		mini_block;
 	int		map_height;
 	int		map_width;
@@ -49,6 +48,7 @@ typedef struct s_mini_map {
 typedef struct s_map {
 	t_player		*player;
 	t_mini_map*		mini_map;
+	mlx_image_t* 	img;
 	mlx_image_t*	N_texture; // youssef
 	mlx_image_t*	S_texture; // youssef
 	mlx_image_t*	W_texture; // youssef
@@ -67,10 +67,8 @@ typedef struct s_map {
 
 void	put_mini_map(t_map *map);
 void	put_area(int x, int y, int size, int color, mlx_image_t* img);
-void	put_player(int x, int y, int size, t_map *map);
 void	put_der(t_map *map);
-void	player_ang(t_map *map);
-void	put_mini_map_limits(t_mini_map *mini_map);
+void	player_update(t_map *map);
 void	put_line(float x, float y, float rt_ang, int len, mlx_image_t* img);
 int	is_wall(t_map* map, int x, int y);
 

@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/12 12:15:57 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/13 07:14:58 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,41 +24,40 @@ static void ft_error(void)
 static void ft_hook(void* param)
 {
 	t_map* map = param;
-	// printf("WIDTH: %d | HEIGHT: %d\n", map->mlx->width, map->mlx->height);
 	if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(map->mlx);
 	if (mlx_is_key_down(map->mlx, MLX_KEY_UP))
 	{
 		map->player->mv = 1;
-		player_ang(map);
+		player_update(map);
 		put_mini_map(map);
 
 	}
 	if (mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
 	{
 		map->player->mv = -1;
-		player_ang(map);
+		player_update(map);
 		put_mini_map(map);
 
 	}
 	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT))
 	{
 		map->player->rt = -1;
-		player_ang(map);
+		player_update(map);
 		put_mini_map(map);
 
 	}
 	if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT))
 	{
 		map->player->rt = 1;
-		player_ang(map);
+		player_update(map);
 		put_mini_map(map);
 
 	}
 		
 }
 
-void	player_ang(t_map *map)
+void	player_update(t_map *map)
 {
 	float x;
 	float y;
@@ -83,23 +82,25 @@ int32_t	main(void)
 	char **ma;
 
 	ma = malloc(sizeof(char *)*15);
-	ma[0] =  ft_strdup("11111111111 111   11111111  11111");
-	ma[1] =  ft_strdup("10000100011101111100000011110001");
-	ma[2] =  ft_strdup("110011100000101000000000111111111");
-	ma[3] =  ft_strdup("100000000000000000000000000000001");
-	ma[4] =  ft_strdup("111111110110000000000000011101111");
-	ma[5] =  ft_strdup("10    110000001100000111011111111");
-	ma[6] =  ft_strdup("111111001111111101110000001000111");
-	ma[7] =  ft_strdup("101000011111111001100010011100001");
-	ma[8] =  ft_strdup("111111100011010101110000001000111");
-	ma[9] =  ft_strdup("      10000000000001100000011001");
-	ma[10] = ft_strdup("   11110000000000001101010010001");
-	ma[11] = ft_strdup("   11000001010101011111001110001");
-	ma[12] = ft_strdup("   11110111011101000111101000001");
-	ma[13] = ft_strdup("10101010101010101010101010101011");
+
+	ma[0] =  ft_strdup("1111111111111111111111111");
+	ma[1] =  ft_strdup("1000000000110000000000001");
+	ma[2] =  ft_strdup("1011000001110000000000001");
+	ma[3] =  ft_strdup("1001000000000000000000001");
+	ma[4] =  ft_strdup("11111111101100000111000011111");
+	ma[5] =  ft_strdup("10000000001100000111000000001");
+	ma[6] =  ft_strdup("11110111111111011100000010001");
+	ma[7] =  ft_strdup("11110111111111011101010010001");
+	ma[8] =  ft_strdup("11000000110101011100000010001");
+	ma[9] =  ft_strdup("10000000000000001100000010001");
+	ma[10] =  ft_strdup("10000000000000001101010010001");
+	ma[11] =  ft_strdup("1100000111010101111101111000111");
+	ma[12] =  ft_strdup("11110111 1110101 101111010001");
+	ma[13] =  ft_strdup("11111111 1111111 111111111111");
+	ma[14] = NULL;
+
 	map.player = &player;
 	map.mini_map = &minimap;
-	ma[14] = NULL;
 	map.block_size = 100;
 	map.map = ma;
 	map.map_height = 34;
@@ -113,18 +114,17 @@ int32_t	main(void)
 	map.player->mv = -1;
 	map.player->rt = -1;
 	map.mini_map->mini_block = 20;
-	map.mini_map->x = 11;
-	map.mini_map->y = 9;
+	map.mini_map->x = 30;
+	map.mini_map->y = 20;
 	map.mini_map->map_height = map.mini_map->y * map.mini_map->mini_block;
 	map.mini_map->map_width = map.mini_map->x * map.mini_map->mini_block;
-
 	mlx_get_monitor_size(0, &map.max_width, &map.max_height);
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
 	if (!mlx)
 		ft_error();
 	map.mlx = mlx;
-	map.mini_map->img = mlx_new_image(mlx, 1800, 900);
-	if (!map.mini_map->img || (mlx_image_to_window(mlx, map.mini_map->img, 0, 0) < 0))
+	map.img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	if (!map.img || (mlx_image_to_window(mlx, map.img, 0, 0) < 0))
 		ft_error();
 	mlx_loop_hook(mlx, ft_hook, (void *)&map);
 	mlx_loop(mlx);
