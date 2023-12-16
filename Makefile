@@ -6,7 +6,7 @@
 #    By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/14 10:59:06 by ebelfkih          #+#    #+#              #
-#    Updated: 2023/12/13 01:42:17 by ebelfkih         ###   ########.fr        #
+#    Updated: 2023/12/15 22:55:21 by ebelfkih         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ MLX_LIBFT = libft/libft.a MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread 
 LIBFT = cd libft && make all
 RM = rm -f
 AR = ar rc
-FILES = code/draw_mini_map.c code/cub3d.c
+FILES = code/draw_mini_map.c code/cub3d.c code/ray_casting.c
 OBJ = $(FILES:.c=.o)
 
 %.o : %.c code/cub3d.h libft/libft.h

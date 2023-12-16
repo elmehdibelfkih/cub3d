@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/13 04:42:00 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/16 02:51:06 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,52 +24,68 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 
+#define WIDTH 1800
+#define HEIGHT 900
+
 typedef struct s_player {
-	float		x; // youssef
-	float		y; // youssef
-	int		mv; // 0 
-	int		rt; // 0
-	float	rad_current_view; // M_PI / 2  || 0 || 3M_PY/3 || M_PI
-	int		view_angle; // 60
-	int		score; // 0
-	float		mv_speed; // 3
-	float		rt_speed; // 2 * (M_P1 / 180)
+	int		score;
+	double		view_angle;
+	double	rad_current_view;
+	double	x;
+	double	y;
+	double	mv_speed;
+	double	rt_speed;
 }t_player;
+
+typedef struct s_ray {
+	int	x_id;
+	double	len[WIDTH]; // malloc
+	double	x;
+}t_ray;
 
 typedef struct s_mini_map {
 	int		mini_block;
 	int		map_height;
 	int		map_width;
-	float		x;
-	float		y;
+	double		x;
+	double		y;
 
 }t_mini_map;
 
+typedef struct s_texture {
+	mlx_image_t*	N_texture;
+	mlx_image_t*	S_texture;
+	mlx_image_t*	W_texture;
+	mlx_image_t*	E_texture;
+}t_texture;
+
 typedef struct s_map {
-	t_player		*player;
-	t_mini_map*		mini_map;
 	mlx_image_t* 	img;
-	mlx_image_t*	N_texture; // youssef
-	mlx_image_t*	S_texture; // youssef
-	mlx_image_t*	W_texture; // youssef
-	mlx_image_t*	E_texture; // youssef
-	char			**map; // youssef
+	t_mini_map*		mini_map;
+	t_texture*		texture;
+	t_player		*player;
+	mlx_t*			mlx;
+	t_ray*			ray;
+	char			**map;
 	int				max_height;
 	int				max_width;
-	int				map_height; // youssef
-	int				map_width; // youssef
-	int				block_size; // 60
-	int				floor_color[3]; // youssef
-	int				ceiling_color[3]; // youssef
-	mlx_t*			mlx;
+	int				map_height;
+	int				map_width;
+	int				block_size;
+	int				floor_color[3];
+	int				ceiling_color[3];
 
 }t_map;
 
 void	put_mini_map(t_map *map);
-void	put_area(int x, int y, int size, int color, mlx_image_t* img);
+void	put_area(int x, int y, int size, mlx_image_t* img);
 void	put_der(t_map *map);
-void	player_update(t_map *map);
-void	put_line(float x, float y, float rt_ang, int len, mlx_image_t* img);
-int	is_wall(t_map* map, int x, int y);
+void	player_update(t_map *map, int mv, int rt);
+void	put_line(double x, double y, double rt_ang, int len, mlx_image_t* img);
+int		is_wall(t_map* map, double x, double y);
+double	horizontal_ray_lenght(t_map *map, double angel);
+double	Vertical_ray_lenght(t_map *map, double angel);
+double  ray_lenght(t_map *map, double angel);
+void 	ray_caster(t_map *map);
 
 #endif

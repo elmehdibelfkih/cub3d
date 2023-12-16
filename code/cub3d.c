@@ -6,14 +6,11 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/13 07:14:58 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/16 05:10:57 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-#define WIDTH 1800
-#define HEIGHT 900
 
 static void ft_error(void)
 {
@@ -27,50 +24,57 @@ static void ft_hook(void* param)
 	if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(map->mlx);
 	if (mlx_is_key_down(map->mlx, MLX_KEY_UP))
-	{
-		map->player->mv = 1;
-		player_update(map);
-		put_mini_map(map);
-
-	}
+		player_update(map, 1, 0);
 	if (mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
-	{
-		map->player->mv = -1;
-		player_update(map);
-		put_mini_map(map);
-
-	}
+		player_update(map, -1, 0);
 	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT))
-	{
-		map->player->rt = -1;
-		player_update(map);
-		put_mini_map(map);
-
-	}
+		player_update(map, 0, -1);
 	if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT))
-	{
-		map->player->rt = 1;
-		player_update(map);
-		put_mini_map(map);
-
-	}
-		
+		player_update(map, 0, 1);
+	// printf("%d\n", map->mlx->width);
 }
 
-void	player_update(t_map *map)
+void	player_update(t_map *map, int mv, int rt)
 {
-	float x;
-	float y;
+	double x;
+	double y;
 
-	map->player->rad_current_view += map->player->rt_speed * map->player->rt;
-	map->player->rt = 0;
-	x = cos(map->player->rad_current_view) * map->player->mv * map->player->mv_speed;
-	y = sin(map->player->rad_current_view) * map->player->mv * map->player->mv_speed;
+	map->player->rad_current_view += map->player->rt_speed * rt;
+	// if (map->player->rad_current_view < 0)
+	// 	map->player->rad_current_view = map->player->rad_current_view * -1;
+	// if (map->player->rad_current_view >= 2  *  M_PI)
+	// {
+	// 	map->player->rad_current_view = map->player->rad_current_view - (map->player->rad_current_view / (2  *  M_PI));
+	// }
+	x = cos(map->player->rad_current_view) * mv * map->player->mv_speed;
+	y = sin(map->player->rad_current_view) * mv * map->player->mv_speed;
 	if (x + map->player->x < 0 || y + map->player->y < 0 || is_wall(map, x + map->player->x, y + map->player->y) == 1 )
 		return ;
 	map->player->x += x;
 	map->player->y += y;
-	map->player->mv = 0;
+	put_mini_map(map);
+	ray_caster(map);
+}
+
+void	init_data(t_map *map, t_player *player, t_mini_map *mini_map)
+{
+	map->player = player;
+	map->mini_map = mini_map;
+	map->block_size = 100;
+	map->map_height = 34;
+	map->map_width = 14;
+	map->player->score = 0;
+	map->player->mv_speed = 3;
+	map->player->rt_speed = 3 * (M_PI / 180);
+	map->player->view_angle = 60 * (M_PI / 180);
+	map->player->x = 1005;
+	map->player->y = 1005;
+	map->player->rad_current_view = -0.5;
+	map->mini_map->mini_block = 20;
+	map->mini_map->x = 8;
+	map->mini_map->y = 6;
+	map->mini_map->map_height = map->mini_map->y * map->mini_map->mini_block;
+	map->mini_map->map_width = map->mini_map->x * map->mini_map->mini_block;
 }
 
 int32_t	main(void)
@@ -99,27 +103,10 @@ int32_t	main(void)
 	ma[13] =  ft_strdup("11111111 1111111 111111111111");
 	ma[14] = NULL;
 
-	map.player = &player;
-	map.mini_map = &minimap;
-	map.block_size = 100;
 	map.map = ma;
-	map.map_height = 34;
-	map.map_width = 14;
-	map.player->score = 0;
-	map.player->mv_speed = 3;
-	map.player->rt_speed = 3 * (M_PI / 180);
-	map.player->x = 1005;
-	map.player->y = 1005;
-	map.player->rad_current_view = M_PI;
-	map.player->mv = -1;
-	map.player->rt = -1;
-	map.mini_map->mini_block = 20;
-	map.mini_map->x = 30;
-	map.mini_map->y = 20;
-	map.mini_map->map_height = map.mini_map->y * map.mini_map->mini_block;
-	map.mini_map->map_width = map.mini_map->x * map.mini_map->mini_block;
-	mlx_get_monitor_size(0, &map.max_width, &map.max_height);
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
+	init_data(&map, &player, &minimap);
+	// mlx_get_monitor_size(0, &map.max_width, &map.max_height);
+	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "cub3d", true);
 	if (!mlx)
 		ft_error();
 	map.mlx = mlx;

@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:12:29 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/13 07:18:03 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/16 00:09:30 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	put_mini_map(t_map *map)
 {
-	float	x;
-	float	y;
-	float	x_p;
-	float	y_p;
+	double	x;
+	double	y;
+	double	x_p;
+	double	y_p;
 
 	x = -1;
 	while (++x < map->mini_map->map_width)
@@ -40,7 +40,7 @@ void	put_mini_map(t_map *map)
 	put_der(map);
 }
 
-void	put_line(float x, float y, float rt_ang, int len, mlx_image_t *img)
+void	put_line(double x, double y, double rt_ang, int len, mlx_image_t *img)
 {
 	int	i;
 
@@ -54,14 +54,15 @@ void	put_line(float x, float y, float rt_ang, int len, mlx_image_t *img)
 	}
 }
 
-int	is_wall(t_map *map, int x, int y)
+int	is_wall(t_map *map, double x, double y)
 {
 	int	j;
 	int	i;
 
 	j = x / map->block_size;
 	i = y / map->block_size;
-	if (i < 0 || j < 0 || i >= map->map_width || j >= (int)ft_strlen(map->map[i]))
+	if (i < 0 || j < 0 || i >= map->map_width
+		|| j >= (int)ft_strlen(map->map[i]))
 		return (-1);
 	if (map->map[i][j] == '1')
 		return (1);
@@ -74,8 +75,8 @@ int	is_wall(t_map *map, int x, int y)
 
 void	put_der(t_map *map)
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 	int		i;
 
 	i = 1;
@@ -89,10 +90,10 @@ void	put_der(t_map *map)
 		mlx_put_pixel(map->img, x, y, 255);
 	}
 	put_area(map->mini_map->map_width / 2 - 2,
-		map->mini_map->map_height / 2 - 2, 5, 255, map->img);
+		map->mini_map->map_height / 2 - 2, 5, map->img);
 }
 
-void	put_area(int x_start, int y_start, int size, int color, mlx_image_t *img)
+void	put_area(int x_start, int y_start, int size, mlx_image_t *img)
 {
 	int		x_end;
 	int		y_end;
@@ -106,7 +107,7 @@ void	put_area(int x_start, int y_start, int size, int color, mlx_image_t *img)
 		y_start = y_tmp;
 		while (y_start < y_end)
 		{
-			mlx_put_pixel(img, x_start, y_start, color);
+			mlx_put_pixel(img, x_start, y_start, 255);
 			y_start++;
 		}
 		x_start++;
