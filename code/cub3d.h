@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/16 02:51:06 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/20 14:34:27 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 #define WIDTH 1800
 #define HEIGHT 900
+#define CLM 3
 
 typedef struct s_player {
 	int		score;
@@ -36,12 +37,6 @@ typedef struct s_player {
 	double	mv_speed;
 	double	rt_speed;
 }t_player;
-
-typedef struct s_ray {
-	int	x_id;
-	double	len[WIDTH]; // malloc
-	double	x;
-}t_ray;
 
 typedef struct s_mini_map {
 	int		mini_block;
@@ -65,8 +60,8 @@ typedef struct s_map {
 	t_texture*		texture;
 	t_player		*player;
 	mlx_t*			mlx;
-	t_ray*			ray;
 	char			**map;
+	float			pp;
 	int				max_height;
 	int				max_width;
 	int				map_height;
@@ -83,9 +78,10 @@ void	put_der(t_map *map);
 void	player_update(t_map *map, int mv, int rt);
 void	put_line(double x, double y, double rt_ang, int len, mlx_image_t* img);
 int		is_wall(t_map* map, double x, double y);
-double	horizontal_ray_lenght(t_map *map, double angel);
-double	Vertical_ray_lenght(t_map *map, double angel);
-double  ray_lenght(t_map *map, double angel);
+double	horizontal_ray_lenght(t_map *map, double angle, double cs, double sn);
+double	Vertical_ray_lenght(t_map *map, double angle, double cs, double sn);
+double  ray_lenght(t_map *map, double angle);
 void 	ray_caster(t_map *map);
+void walls(t_map * map, double len, double x_id);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/16 05:10:57 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/20 14:37:06 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,41 +40,36 @@ void	player_update(t_map *map, int mv, int rt)
 	double y;
 
 	map->player->rad_current_view += map->player->rt_speed * rt;
-	// if (map->player->rad_current_view < 0)
-	// 	map->player->rad_current_view = map->player->rad_current_view * -1;
-	// if (map->player->rad_current_view >= 2  *  M_PI)
-	// {
-	// 	map->player->rad_current_view = map->player->rad_current_view - (map->player->rad_current_view / (2  *  M_PI));
-	// }
 	x = cos(map->player->rad_current_view) * mv * map->player->mv_speed;
 	y = sin(map->player->rad_current_view) * mv * map->player->mv_speed;
 	if (x + map->player->x < 0 || y + map->player->y < 0 || is_wall(map, x + map->player->x, y + map->player->y) == 1 )
 		return ;
 	map->player->x += x;
 	map->player->y += y;
-	put_mini_map(map);
 	ray_caster(map);
+	put_mini_map(map);
 }
 
 void	init_data(t_map *map, t_player *player, t_mini_map *mini_map)
 {
 	map->player = player;
 	map->mini_map = mini_map;
-	map->block_size = 100;
+	map->block_size = 75;
 	map->map_height = 34;
 	map->map_width = 14;
 	map->player->score = 0;
 	map->player->mv_speed = 3;
-	map->player->rt_speed = 3 * (M_PI / 180);
+	map->player->rt_speed = 4 * (M_PI / 180);
 	map->player->view_angle = 60 * (M_PI / 180);
-	map->player->x = 1005;
-	map->player->y = 1005;
-	map->player->rad_current_view = -0.5;
+	map->player->x = 75;
+	map->player->y = 75;
+	map->player->rad_current_view = 3 * M_PI / 2;
 	map->mini_map->mini_block = 20;
 	map->mini_map->x = 8;
 	map->mini_map->y = 6;
 	map->mini_map->map_height = map->mini_map->y * map->mini_map->mini_block;
 	map->mini_map->map_width = map->mini_map->x * map->mini_map->mini_block;
+	map->pp = (WIDTH / 2 )/ tan(map->player->view_angle / 2);
 }
 
 int32_t	main(void)

@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:12:29 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/16 00:09:30 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/19 23:37:26 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	put_line(double x, double y, double rt_ang, int len, mlx_image_t *img)
 		x += cos(rt_ang);
 		y += sin(rt_ang);
 		i++;
-		mlx_put_pixel(img, x, y, 255);
+		mlx_put_pixel(img, x, y, 0);
 	}
 }
 
@@ -68,9 +68,7 @@ int	is_wall(t_map *map, double x, double y)
 		return (1);
 	else if (map->map[i][j] == '0')
 		return (0);
-	else
-		return (-1);
-	return (3);
+	return (-1);
 }
 
 void	put_der(t_map *map)
