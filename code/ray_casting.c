@@ -6,153 +6,133 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 11:21:16 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/20 14:27:32 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/23 14:12:00 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double horizontal_ray_lenght(t_map *map, double angle, double cs, double sn)
+void	delta(t_map *map, double cs, double sn, char c)
 {
-	double xa;
-	double ya;
-	double d_x;
-	double d_y;
-	int     t = -3;
+	if (c == 'v')
+	{
+		if (cs < 0)
+			map->ray->d_x = map->ray->d_x * -1;
+		if (sn < 0 && map->ray->d_y > 0)
+			map->ray->d_y = map->ray->d_y * -1;
+		if (sn > 0 && map->ray->d_y < 0)
+			map->ray->d_y = map->ray->d_y * -1;
+	}
+	else
+	{
+		if (sn < 0)
+			map->ray->d_y = map->ray->d_y * -1;
+		if (cs < 0 && map->ray->d_x > 0)
+			map->ray->d_x = map->ray->d_x * -1;
+		if (cs > 0 && map->ray->d_x < 0)
+			map->ray->d_x = map->ray->d_x * -1;
+	}
+}
 
-	ya = map->player->y - ((int)map->player->y % map->block_size);
+void	adjust(int *x, int *y, double cs, double sn)
+{
+	if (sn <= 0 && cs >= 0)
+	{
+		*x = 150;
+		*y = -150;
+	}
+	else if (sn <= 0 && cs <= 0)
+	{
+		*x = -150;
+		*y = -150;
+	}
+	else if (sn >= 0 && cs <= 0)
+	{
+		*x = -150;
+		*y = +150;
+	}
+	else if (sn >= 0 && cs >= 0)
+	{
+		*x = 150;
+		*y = 150;
+	}
+}
+
+double	horizontal_ray_lenght(t_map *map, double angle, double cs, double sn)
+{
+	int		x;
+	int		y;
+
+	adjust(&x, &y, cs, sn);
+	map->ray->ya = map->player->y - ((int)map->player->y % map->block_size);
 	if (sn > 0)
-	{
-		ya += map->block_size;
-		t = 3;
-	}
-	xa = map->player->x + ((ya - map->player->y) / tan(angle));
-	if (is_wall(map, xa, ya + t))
-		return sqrt(pow(map->player->x - xa, 2) + pow(map->player->y - ya, 2));
-	d_x = map->block_size / tan(angle);
-	d_y = map->block_size;
-	if (sn < 0)
-		d_y = d_y * -1;
-	if (cs < 0 && d_x > 0)
-		d_x = d_x * -1;
-	if (cs > 0 && d_x < 0)
-		d_x = d_x * -1;
+		map->ray->ya += map->block_size;
+	map->ray->xa = map->player->x
+		+ ((map->ray->ya - map->player->y) / tan(angle));
+	if (is_wall(map, map->ray->xa, map->ray->ya + y))
+		return (sqrt(pow(map->player->x - map->ray->xa, 2)
+				+ pow(map->player->y - map->ray->ya, 2)));
+	map->ray->d_x = map->block_size / tan(angle);
+	map->ray->d_y = map->block_size;
+	delta(map, cs, sn, 'h');
 	while (true)
 	{
-		ya += d_y;
-		xa += d_x;
-		if (is_wall(map, xa, ya + t))
-			return sqrt(pow(map->player->x - xa, 2) + pow(map->player->y - ya, 2));
+		map->ray->ya += map->ray->d_y;
+		map->ray->xa += map->ray->d_x;
+		if (is_wall(map, map->ray->xa, map->ray->ya + y))
+			return (sqrt(pow(map->player->x - map->ray->xa, 2)
+					+ pow(map->player->y - map->ray->ya, 2)));
 	}
 }
 
-double Vertical_ray_lenght(t_map *map, double angle, double cs, double sn)
+double	vertical_ray_lenght(t_map *map, double angle, double cs, double sn)
 {
-	double xa;
-	double ya;
-	double d_x;
-	double d_y;
-	int     t = -3;
+	int		x;
+	int		y;
 
-	xa = map->player->x - ((int)map->player->x % map->block_size);
+	adjust(&x, &y, cs, sn);
+	map->ray->xa = map->player->x - ((int)map->player->x % map->block_size);
 	if (cs > 0)
-	{
-		xa += map->block_size;
-		t = 3;
-	}
-	ya = map->player->y + ((xa - map->player->x) * tan(angle));
-	if (is_wall(map, xa + t, ya))
-		return sqrt(pow(map->player->x - xa, 2) + pow(map->player->y - ya, 2));
-	d_x = map->block_size;
-	d_y = map->block_size * tan(angle);
-	if (cs < 0)
-		d_x = d_x * -1;
-	if (sn < 0 && d_y > 0)
-		d_y = d_y * -1;
-	if (sn > 0 && d_y < 0)
-		d_y = d_y * -1;
+		map->ray->xa += map->block_size;
+	map->ray->ya = map->player->y
+		+ ((map->ray->xa - map->player->x) * tan(angle));
+	if (is_wall(map, map->ray->xa + x, map->ray->ya))
+		return (sqrt(pow(map->player->x - map->ray->xa, 2)
+				+ pow(map->player->y - map->ray->ya, 2)));
+	map->ray->d_x = map->block_size;
+	map->ray->d_y = map->block_size * tan(angle);
+	delta(map, cs, sn, 'v');
 	while (true)
 	{
-		ya += d_y;
-		xa += d_x;
-		if (is_wall(map, xa + t, ya))
-			return sqrt(pow(map->player->x - xa, 2) + pow(map->player->y - ya, 2));
+		map->ray->ya += map->ray->d_y;
+		map->ray->xa += map->ray->d_x;
+		if (is_wall(map, map->ray->xa + x, map->ray->ya))
+			return (sqrt(pow(map->player->x - map->ray->xa, 2)
+					+ pow(map->player->y - map->ray->ya, 2)));
 	}
 }
 
-double  ray_lenght(t_map *map, double angle)
+double	ray_lenght(t_map *map, double angle, uint32_t *color)
 {
-	double  horizontal;
-	double  Vertical;
-	double cs;
-	double sn;
+	double	horizontal;
+	double	vertical;
+	double	cs;
+	double	sn;
 
 	sn = sin(angle);
 	cs = cos(angle);
-	horizontal = horizontal_ray_lenght(map, angle, cs, sn) * cos(map->player->rad_current_view - angle);
-	Vertical = Vertical_ray_lenght(map, angle, cs, sn) * cos(map->player->rad_current_view - angle);
-	if (horizontal > Vertical)
-		return (Vertical);
+	horizontal = horizontal_ray_lenght(map, angle, cs, sn)
+		* cos(map->player->rad_current_view - angle);
+	vertical = vertical_ray_lenght(map, angle, cs, sn)
+		* cos(map->player->rad_current_view - angle);
+	if ((sn == 0 || horizontal > vertical) && cs != 0)
+	{
+		*color = is_nesw(sn, cs, 1);
+		return (vertical);
+	}
 	else
+	{
+		*color = is_nesw(sn, cs, 0);
 		return (horizontal);
-}
-
-void  ray_caster(t_map *map)
-{
-	double   angle;
-	double   ray_part;
-	int clm;
-
-	clm = 0;
-	angle = (map->player->view_angle/2 * -1) + map->player->rad_current_view;
-	ray_part = map->player->view_angle  * CLM / WIDTH;
-	while (angle < map->player->view_angle / 2 + map->player->rad_current_view)
-	{
-		// put_line(map->mini_map->map_width / 2 , map->mini_map->map_height / 2, angle,  ray_lenght(map, angle) * map->mini_map->mini_block / map->block_size ,map->img);
-		walls(map, ray_lenght(map, angle), clm);
-		angle += ray_part;
-		clm+= CLM;
-	}
-}
-
-void walls(t_map * map, double len, double x_id)
-{
-	float   walllen;
-	float   y_id;
-	int     i;
-	int     j;
-
-	i = 0;
-	walllen = ((map->block_size / len) * map->pp);
-	y_id = (HEIGHT / 2) - (walllen / 2);
-	if (walllen >= HEIGHT)
-	{
-		while (i < CLM && x_id + i < WIDTH)
-		{
-			put_line(x_id + i, 0, M_PI / 2, HEIGHT, map->img);            
-			i++;
-		}
-	}
-	else
-	{
-		while (i < CLM && x_id + i < WIDTH)
-		{
-
-			j = 0;
-			while (j < y_id)
-			{
-				mlx_put_pixel(map->img, x_id + i, 0 + j, 200);
-				j++;
-			}
-			put_line(x_id + i, y_id, M_PI / 2, walllen, map->img);
-			j = 0;
-			while (j < y_id)
-			{
-				mlx_put_pixel(map->img, x_id + i,  y_id + walllen + j, 200);
-				j++;
-			}
-			// put_line(x_id + i, y_id + len, M_PI / 2, (len - HEIGHT ) / 2, map->img);
-			i++;
-		}
 	}
 }

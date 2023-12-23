@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:12:29 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/19 23:37:26 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/23 12:42:34 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,29 @@ void	put_mini_map(t_map *map)
 			y_p = map->player->y - (map->block_size * (map->mini_map->map_height
 						/ 2 - y) / map->mini_map->mini_block);
 			if (is_wall(map, x_p, y_p) == 1)
-				mlx_put_pixel(map->img, x, y, 255);
+				mlx_put_pixel(map->img, x, y, get_rgba(0, 0, 0, 255));
 			else if (is_wall(map, x_p, y_p) == 0)
-				mlx_put_pixel(map->img, x, y, 80);
+				mlx_put_pixel(map->img, x, y, get_rgba(0, 0, 0, 80));
 			else
-				mlx_put_pixel(map->img, x, y, 0);
+				mlx_put_pixel(map->img, x, y, get_rgba(0, 0, 0, 0));
 		}
 	}
 	put_der(map);
 }
 
-void	put_line(double x, double y, double rt_ang, int len, mlx_image_t *img)
-{
-	int	i;
+// void	put_line(double x, double y, double rt_ang, int len, mlx_image_t *img)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < len)
-	{
-		x += cos(rt_ang);
-		y += sin(rt_ang);
-		i++;
-		mlx_put_pixel(img, x, y, 0);
-	}
-}
+// 	i = 0;
+// 	while (i < len)
+// 	{
+// 		x += cos(rt_ang);
+// 		y += sin(rt_ang);
+// 		i++;
+// 		mlx_put_pixel(img, x, y, 0);
+// 	}
+// }
 
 int	is_wall(t_map *map, double x, double y)
 {
