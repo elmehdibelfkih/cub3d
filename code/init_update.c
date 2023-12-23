@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/23 14:33:15 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/23 18:01:52 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,17 @@ void	init_data(t_map *map, t_player *player, t_mini_map *mini_map)
 	map->floor_color[0] = 225;
 	map->floor_color[1] = 30;
 	map->floor_color[2] = 60;
+	init_textures(map);
+}
+
+void	init_textures(t_map *map)
+{
+	map->texture->s_texture =  mlx_load_png("../textures_l/Brick/Brick_01-512x512.png");
+	map->texture->e_texture =  mlx_load_png("../textures_l/Brick/Brick_01-512x512.png");
+	map->texture->w_texture =  mlx_load_png("../textures_l/Brick/Brick_01-512x512.png");
+	map->texture->n_texture =  mlx_load_png("../textures_l/Brick/Brick_01-512x512.png");
+	// map->texture->n_img = mlx_texture_to_image(map->mlx, map->texture->n_texture);
+	// map->texture->s_img = mlx_texture_to_image(map->mlx, map->texture->s_texture);
+	// map->texture->e_img = mlx_texture_to_image(map->mlx, map->texture->e_texture);
+	// map->texture->w_img = mlx_texture_to_image(map->mlx, map->texture->w_texture);
 }

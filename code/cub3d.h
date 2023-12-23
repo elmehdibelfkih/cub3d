@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/23 12:39:36 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/23 17:32:46 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,14 @@ typedef struct s_ray
 
 typedef struct s_texture
 {
-	mlx_image_t	*n_texture;
-	mlx_image_t	*s_texture;
-	mlx_image_t	*e_texture;
-	mlx_image_t	*w_texture;
+	mlx_texture_t	*n_texture;
+	mlx_texture_t	*s_texture;
+	mlx_texture_t	*e_texture;
+	mlx_texture_t	*w_texture;
+	mlx_image_t		*n_img;
+	mlx_image_t		*s_img;
+	mlx_image_t		*e_img;
+	mlx_image_t		*w_img;
 }	t_texture;
 
 typedef struct s_map
@@ -106,5 +110,5 @@ void	ft_hook(void *param);
 void	init_data(t_map *map, t_player *player, t_mini_map *mini_map);
 void	window_update(t_map *map);
 void	ft_error(void);
-
+void	init_textures(t_map *map);
 #endif

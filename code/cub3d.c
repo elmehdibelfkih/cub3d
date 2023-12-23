@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/23 12:15:22 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/23 17:48:34 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int32_t	main(void)
 	t_mini_map	minimap;
 	mlx_t		*mlx;
 	t_ray		ray;
+	t_texture	texture;
 	char		**ma;
 
 	ma = malloc(sizeof(char *) * 15);
@@ -43,6 +44,7 @@ int32_t	main(void)
 	ma[12] = ft_strdup("11110111 1110101 101111010001");
 	ma[13] = ft_strdup("11111111 1111111 111111111111");
 	ma[14] = NULL;
+	map.texture = &texture;
 	map.map = ma;
 	map.ray = &ray;
 	init_data(&map, &player, &minimap);
