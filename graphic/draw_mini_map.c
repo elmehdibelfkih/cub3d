@@ -6,11 +6,11 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:12:29 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/27 22:50:51 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 00:01:15 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	put_mini_map(t_map *map)
 {
@@ -64,7 +64,7 @@ int	is_wall(t_map *map, double x, double y)
 
 	j = x / map->block_size;
 	i = y / map->block_size;
-	if (i < 0 || j < 0 || i >= map->map_width
+	if (i < 0 || j < 0 || i >= map->height
 		|| j >= (int)ft_strlen(map->map[i]))
 		return (-1);
 	if (map->map[i][j] == '1')

@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/27 22:50:49 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 00:53:04 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,58 +18,35 @@ void	ft_error(void)
 	exit(EXIT_FAILURE);
 }
 
-int32_t	main(void)
+int32_t	main(int ac, char **av)
 {
 	t_map		map;
 	t_player	player;
 	t_mini_map	minimap;
 	t_texture	texture;
 	t_ray		ray;
-	char		**ma;
-
-	ma = malloc(sizeof(char *) * 15);
-	ma[0] = ft_strdup("1111111111111111111111111");
-	ma[1] = ft_strdup("1000000000110000000000001");
-	ma[2] = ft_strdup("1011000001110000000000001");
-	ma[3] = ft_strdup("1001000000000000000000001");
-	ma[4] = ft_strdup("11111111101100000111000011111");
-	ma[5] = ft_strdup("10000000001100000111000000001");
-	ma[6] = ft_strdup("11110111111111011100000010001");
-	ma[7] = ft_strdup("11110111111111011101010010001");
-	ma[8] = ft_strdup("11000000110101011100000010001");
-	ma[9] = ft_strdup("10000000000000001100000010001");
-	ma[10] = ft_strdup("10000000000000001101010010001");
-	ma[11] = ft_strdup("1100000111010101111101111000111");
-	ma[12] = ft_strdup("11110111 1110101 101111010001");
-	ma[13] = ft_strdup("11111111 1111111 111111111111");
-	ma[14] = NULL;
-	
-	map.map = ma;
+	t_info		info;
+	if (ac != 2)
+		return(write(2,  "Error: incorrect syntax", 24), EXIT_FAILURE);
 	map.texture = &texture;
 	map.player = &player;
 	map.mini_map = &minimap;
+	map.info =&info;
 	map.ray = &ray;
 	g_width = 2100;
 	g_height = 1000;
 	g_clm = 1;
-	map.texture->n_path = "textures_l/Brick/Brick_01-512x512.png";
-	map.texture->s_path = "textures_l/Brick/Brick_01-512x512.png";
-	map.texture->e_path = "textures_l/Brick/Brick_01-512x512.png";
-	map.texture->w_path = "textures_l/Brick/Brick_01-512x512.png";
-	map.mlx = mlx_init(g_width, g_height, "cub3d", true);
-	if (!map.mlx)
-		ft_error();
-
-	init_data(&map);
-
+	ft_bzero(&info, sizeof(info));
+	init_data(&map, av[1]);
 	map.img = mlx_new_image(map.mlx, g_width, g_height);
 	if (!map.img || (mlx_image_to_window(map.mlx, map.img, 0, 0) < 0))
 		ft_error();
-
 	ray_caster(&map);
 	put_mini_map(&map);
 	mlx_loop_hook(map.mlx, ft_hook, (void *)&map);
 	mlx_loop(map.mlx);
 	mlx_terminate(map.mlx);
+    free_clr(&info);
+    ft_clearr(map.map);
 	return (EXIT_SUCCESS);
 }

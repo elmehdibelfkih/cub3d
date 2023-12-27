@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 00:14:21 by ybouchra          #+#    #+#             */
-/*   Updated: 2023/12/27 22:42:23 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 00:12:24 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void check_extention(char *av)
 
 
 
-// void    init_info(t_info *info, t_map *vars, t_player *player, t_mlx *mlx)
+// void    init_info(t_info *info, t_map *vars, t_player *player)
 // {
 //     player->y = get_y(vars->map);
 //     player->x = get_x(vars->map, player->y);
@@ -85,7 +85,12 @@ void check_extention(char *av)
 //     printf("%s %s %s\n", info->C_colors[0], info->C_colors[1], info->C_colors[2]);
 //     printf("%s %s %s\n", info->F_colors[0], info->F_colors[1], info->F_colors[2]);
 
+//     printf("%s\n", vars->map_height);
+//     printf("%s\n", vars->map_width);
+//     printf("%s\n", vars->block_size);
+
 //     print_map(vars->map);
+//     exit(0);
 
 //     // init_texture(mlx, info, vars);
 // }

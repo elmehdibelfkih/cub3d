@@ -6,11 +6,11 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/27 22:51:16 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 00:51:42 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	ft_hook(void *param)
 {
@@ -100,62 +100,63 @@ void	player_update(t_map *map, int mv, int rt)
 	}
 	ray_caster(map);
 	put_mini_map(map);
-	// printf("x => %f\n", map->player->x);
-	// printf("y => %f\n", map->player->y);
-	// printf("a => %f\n", map->player->rad_current_view);
 }
 
-void	init_data(t_map *map)
+void	init_data(t_map *map, char *av)
 {
+	map->mlx = mlx_init(g_width, g_height, "cub3d", true);
+	if (!map->mlx)
+	ft_error();
+	
+    check_extention(av);
+    read_file(av, map->info);
+    check_file( map->info, map);
+    check_map(map,  map->info);
 	map->block_size = 512;
-	map->map_height = 34;
-	map->map_width = 14;
+	map->height = 14;
 	map->player->score = 0;
 	map->player->mv_speed = 30;
 	map->player->rt_speed = 1 * (M_PI / 180);
 	map->player->view_angle = 60 * (M_PI / 180);
-	map->player->x = 1892.814170;
-	map->player->y = 5162.781734;
-	map->player->rad_current_view = 9.965830;
+	map->player->x = (get_x(map->map, get_y(map->map)) * map->block_size) + (map->block_size / 2);
+	map->player->y = (get_y(map->map) * map->block_size) + (map->block_size / 2);
+	map->map[get_y(map->map)][get_x(map->map, get_y(map->map))] = '0';
+	map->player->rad_current_view = 0;
 	map->mini_map->mini_block = 20;
 	map->mini_map->x = 8;
 	map->mini_map->y = 6;
 	map->mini_map->map_height = map->mini_map->y * map->mini_map->mini_block;
 	map->mini_map->map_width = map->mini_map->x * map->mini_map->mini_block;
 	map->pp = (g_width / 2) / tan(map->player->view_angle / 2);
-	map->ceiling_color[0] = 12;
-	map->ceiling_color[1] = 10;
-	map->ceiling_color[2] = 150;
-	map->floor_color[0] = 225;
-	map->floor_color[1] = 30;
-	map->floor_color[2] = 60;
 	init_textures(map);
 }
 
 void	init_textures(t_map *map)
 {
-	map->texture->s_texture =  mlx_load_png(map->texture->s_path);
+	map->texture->s_texture =  mlx_load_png(map->info->SO_txt[1]);
 	if (!map->texture->s_texture)
 		ft_error();
-	map->texture->e_texture =  mlx_load_png(map->texture->e_path);
+	map->texture->e_texture =  mlx_load_png(map->info->EA_txt[1]);
 	if (!map->texture->e_texture)
 		ft_error();
-	map->texture->w_texture =  mlx_load_png(map->texture->w_path);
+	map->texture->w_texture =  mlx_load_png(map->info->WE_txt[1]);
 	if (!map->texture->w_texture)
 		ft_error();
-	map->texture->n_texture =  mlx_load_png(map->texture->n_path);
+	map->texture->n_texture =  mlx_load_png(map->info->NO_txt[1]);
 	if (!map->texture->n_texture)
 		ft_error();
+
 	map->texture->s_img = mlx_texture_to_image(map->mlx, map->texture->s_texture);
-	if (!map->texture->n_texture)
+	if (!map->texture->s_img)
 		ft_error();
 	map->texture->n_img = mlx_texture_to_image(map->mlx, map->texture->n_texture);
-	if (!map->texture->n_texture)
+	if (!map->texture->n_img)
 		ft_error();
 	map->texture->e_img = mlx_texture_to_image(map->mlx, map->texture->e_texture);
-	if (!map->texture->n_texture)
+	if (!map->texture->e_img)
 		ft_error();
 	map->texture->w_img = mlx_texture_to_image(map->mlx, map->texture->w_texture);
-	if (!map->texture->n_texture)
+	if (!map->texture->w_img)
 		ft_error();
+		// mlx_image_to_window(map->mlx, map->texture->w_img, 0, 0);
 }

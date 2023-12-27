@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/27 22:53:27 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 00:47:40 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <string.h>
 # include <math.h>
 # include <stdbool.h>
-# include "../MLX42/include/MLX42/MLX42.h"
-# include "../libft/libft.h"
+# include "MLX42/include/MLX42/MLX42.h"
+# include "libft/libft.h"
 
 // # ifndef BUFFER_SIZE
 // # define BUFFER_SIZE 20
@@ -46,6 +46,7 @@ typedef struct s_info
 	char	**C_colors;
 	char	**F_colors;
 }	t_info;
+
 typedef struct s_player
 {
 	int		score;
@@ -86,10 +87,6 @@ typedef struct s_texture
 	mlx_image_t		*s_img;
 	mlx_image_t		*e_img;
 	mlx_image_t		*w_img;
-	char			*e_path;
-	char			*w_path;
-	char			*s_path;
-	char			*n_path;
 }	t_texture;
 
 typedef struct s_map
@@ -103,8 +100,8 @@ typedef struct s_map
 	t_info		*info;
 	char		**map;
 	float		pp;
-	int			map_height;
-	int			map_width;
+	int			height;
+	int			width;
 	int			block_size;
 	int			floor_color[3];
 	int			ceiling_color[3];
@@ -128,34 +125,35 @@ void	delta(t_map *map, double cs, double sn, char c);
 void	adjust(int *x, int *y, double cs, double sn);
 void	ft_speed(t_map *map, char c);
 void	ft_hook(void *param);
-void	init_data(t_map *map);
+void	init_data(t_map *map, char *av);
 void	window_update(t_map *map);
 void	ft_error(void);
 void	init_textures(t_map *map);
+// void	init_info(t_info *info, t_map *map, t_player *player, t_mlx *mlx);
 
-// void	check_file(t_info *info, t_map *map);
-// void	check_texture(t_info *info);
-// void    check_colors(t_info *info, t_map *map);
-// void	check_map(t_map *vars, t_info *info);
-// void	set_map(t_map *vars, char **f_map);
-// char	*get_spaces(int size);
-// int		max_width( char **f_map);
-// int		is_digit(char *arr);
-// void	start_map(t_info *info, char **f_map);
-// int 	height_map(t_info *info, char **f_map);
-// int 	valid_char(char **map);
-// int		is_exist(char *str, int c);
-// int		nbr_item(char *s, char c);  
-// void	ft_clearr(char **arr);
-// void	free_txt(t_info *info);
-// void	free_clr(t_info *info);
-// void	free_all(t_info *info, char **map, char *msg);
-// void 	ft_puterr(char *str);
-// int		get_y(char **map);
-// int		get_x(char **map, int i);
-// void	print_map(char **vars);
-// void    height_file(char *av, t_info *info);
-// void    read_file(char *av, t_info *info);
-// void check_extention(char *av);
+void	check_file(t_info *info, t_map *map);
+void	check_texture(t_info *info);
+void    check_colors(t_info *info, t_map *map);
+void	check_map(t_map *vars, t_info *info);
+void	set_map(t_map *vars, char **f_map);
+char	*get_spaces(int size);
+int		max_width( char **f_map);
+int		is_digit(char *arr);
+void	start_map(t_info *info, char **f_map);
+int 	height_map(t_info *info, char **f_map);
+int 	valid_char(char **map);
+int		is_exist(char *str, int c);
+int		nbr_item(char *s, char c);  
+void	ft_clearr(char **arr);
+void	free_txt(t_info *info);
+void	free_clr(t_info *info);
+void	free_all(t_info *info, char **map, char *msg);
+void 	ft_puterr(char *str);
+int		get_y(char **map);
+int		get_x(char **map, int i);
+void	print_map(char **vars);
+void    height_file(char *av, t_info *info);
+void    read_file(char *av, t_info *info);
+void check_extention(char *av);
 // void    init_info(t_info *info, t_map *vars, t_player *player, t_mlx *mlx);
 #endif

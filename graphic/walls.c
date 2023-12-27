@@ -6,11 +6,11 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 08:43:54 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/27 22:51:23 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/27 23:03:18 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int	get_rgba(int r, int g, int b, int a)
 {

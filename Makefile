@@ -6,7 +6,7 @@
 #    By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/14 10:59:06 by ebelfkih          #+#    #+#              #
-#    Updated: 2023/12/27 22:52:01 by ebelfkih         ###   ########.fr        #
+#    Updated: 2023/12/28 00:41:37 by ebelfkih         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,10 @@ MLX_LIBFT = libft/libft.a MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread 
 LIBFT = cd libft && make all
 RM = rm -f
 AR = ar rc
-FILES = code/draw_mini_map.c code/cub3d.c code/ray_casting.c code/walls.c code/init_update.c code/textures.c 
-#parsing/file_items.c parsing/free.c parsing/pars_data.c parsing/pars_map.c parsing/utils_map.c parsing/utils.c parsing/utils1.c
+FILES = graphic/draw_mini_map.c cub3d.c graphic/ray_casting.c graphic/walls.c graphic/init_update.c graphic/textures.c parsing/file_items.c parsing/free.c parsing/pars_data.c parsing/pars_map.c parsing/utils_map.c parsing/utils.c parsing/utils1.c
 OBJ = $(FILES:.c=.o)
 
-%.o : %.c code/cub3d.h libft/libft.h
+%.o : %.c cub3d.h libft/libft.h
 	$(CC) -o $@ -c $<
 
 $(NAME) : $(OBJ)

@@ -6,11 +6,11 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 11:21:16 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/27 22:51:18 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/27 23:02:59 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	delta(t_map *map, double cs, double sn, char c)
 {

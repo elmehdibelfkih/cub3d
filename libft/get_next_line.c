@@ -6,11 +6,11 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 08:05:25 by ybouchra          #+#    #+#             */
-/*   Updated: 2023/12/27 22:55:03 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/27 23:03:45 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../code/cub3d.h"
+#include "../cub3d.h"
 
 char	*readall(char *saved, int fd)
 {

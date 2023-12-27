@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 10:15:00 by ybouchra          #+#    #+#             */
-/*   Updated: 2023/12/27 21:44:17 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 00:37:08 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,31 @@ void map_border(t_info *info, char **map, int height)
     }
 }
 
-// void set_map(t_map *vars, char **f_map)
-// {
-//     int size;
-//     char *spaces;
-//     int i;
-//     int j;
+void set_map(t_map *vars, char **f_map)
+{
+    int size;
+    char *spaces;
+    int i;
+    int j;
 
-//     i = 0;
-//     j  = -1;
-//     vars->max_width = max_width(vars->map);
-//     while (f_map[i])
-//     {
-//             size = vars->max_width - ft_strlen(f_map[i]);
-//             if(size != 0)
-//             {
-//                 spaces = get_spaces(size);
-//                 f_map[++j] = ft_strjoin(f_map[i], spaces);
-//                 free(spaces);
-//             }
-//             else
-//                 f_map[++j] = ft_strdup(f_map[i]);      
-//         i++;
-//     }
-//     f_map[++j] = NULL;
-// }
+    i = 0;
+    j  = -1;
+    vars->width = max_width(vars->map);
+    while (f_map[i])
+    {
+            size = vars->width - ft_strlen(f_map[i]);
+            if(size != 0)
+            {
+                spaces = get_spaces(size);
+                f_map[++j] = ft_strjoin(f_map[i], spaces);
+                free(spaces);
+            }
+            else
+                f_map[++j] = ft_strdup(f_map[i]);      
+        i++;
+    }
+    f_map[++j] = NULL;
+}
 
 int increment(char *line, char c)
 {
@@ -176,7 +176,7 @@ void check_map(t_map *vars, t_info *info)
 {
     read_map(info, vars);
     check_items(info, vars->map);
-    // set_map(vars, vars->map);
+    set_map(vars, vars->map);
     map_border(info, vars->map, vars->height -1);
     map_content(info, vars->map);
 }
