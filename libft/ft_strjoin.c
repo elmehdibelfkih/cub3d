@@ -3,32 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybouchra <ybouchra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 11:47:20 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/01/15 09:25:51 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/12 04:03:40 by ybouchra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
-	char	*s;
+	int		len;
+	char	*new;
 
-	i = -1;
+	i = 0;
 	j = 0;
-	if (!s1 || !s2)
+	if (!s1)
+		return (ft_strdup(s2));
+	len = (ft_strlen(s1) + ft_strlen(s2));
+	new = malloc((len * sizeof(char)) + 1);
+	if (!new)
 		return (NULL);
-	s = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!s)
-		return (NULL);
-	while (s1[++i])
-		s[i] = s1[i];
+	while (s1[i])
+	{
+		new[i] = s1[i];
+		i++;
+	}
 	while (s2[j])
-		s[i++] = s2[j++];
-	s[i] = '\0';
-	return (s);
+		new[i++] = s2[j++];
+	new[i] = '\0';
+	free(s1);
+	return (new);
 }

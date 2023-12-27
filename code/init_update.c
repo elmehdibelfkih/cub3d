@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/23 18:01:52 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/27 22:51:16 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	ft_hook(void *param)
 
 void	window_update(t_map *map)
 {
+	if (map->mlx->width <= map->mini_map->map_width
+			|| map->mlx->height <= map->mini_map->map_height)
+		return ;
 	g_width = map->mlx->width;
 	g_height = map->mlx->height;
 	mlx_delete_image(map->mlx, map->img);
@@ -97,15 +100,13 @@ void	player_update(t_map *map, int mv, int rt)
 	}
 	ray_caster(map);
 	put_mini_map(map);
+	// printf("x => %f\n", map->player->x);
+	// printf("y => %f\n", map->player->y);
+	// printf("a => %f\n", map->player->rad_current_view);
 }
 
-void	init_data(t_map *map, t_player *player, t_mini_map *mini_map)
+void	init_data(t_map *map)
 {
-	g_height = 1000;
-	g_width = 2100;
-	g_clm = 1;
-	map->player = player;
-	map->mini_map = mini_map;
 	map->block_size = 512;
 	map->map_height = 34;
 	map->map_width = 14;
@@ -113,9 +114,9 @@ void	init_data(t_map *map, t_player *player, t_mini_map *mini_map)
 	map->player->mv_speed = 30;
 	map->player->rt_speed = 1 * (M_PI / 180);
 	map->player->view_angle = 60 * (M_PI / 180);
-	map->player->x = 900;
-	map->player->y = 900;
-	map->player->rad_current_view = 3 * M_PI / 2;
+	map->player->x = 1892.814170;
+	map->player->y = 5162.781734;
+	map->player->rad_current_view = 9.965830;
 	map->mini_map->mini_block = 20;
 	map->mini_map->x = 8;
 	map->mini_map->y = 6;
@@ -133,12 +134,28 @@ void	init_data(t_map *map, t_player *player, t_mini_map *mini_map)
 
 void	init_textures(t_map *map)
 {
-	map->texture->s_texture =  mlx_load_png("../textures_l/Brick/Brick_01-512x512.png");
-	map->texture->e_texture =  mlx_load_png("../textures_l/Brick/Brick_01-512x512.png");
-	map->texture->w_texture =  mlx_load_png("../textures_l/Brick/Brick_01-512x512.png");
-	map->texture->n_texture =  mlx_load_png("../textures_l/Brick/Brick_01-512x512.png");
-	// map->texture->n_img = mlx_texture_to_image(map->mlx, map->texture->n_texture);
-	// map->texture->s_img = mlx_texture_to_image(map->mlx, map->texture->s_texture);
-	// map->texture->e_img = mlx_texture_to_image(map->mlx, map->texture->e_texture);
-	// map->texture->w_img = mlx_texture_to_image(map->mlx, map->texture->w_texture);
+	map->texture->s_texture =  mlx_load_png(map->texture->s_path);
+	if (!map->texture->s_texture)
+		ft_error();
+	map->texture->e_texture =  mlx_load_png(map->texture->e_path);
+	if (!map->texture->e_texture)
+		ft_error();
+	map->texture->w_texture =  mlx_load_png(map->texture->w_path);
+	if (!map->texture->w_texture)
+		ft_error();
+	map->texture->n_texture =  mlx_load_png(map->texture->n_path);
+	if (!map->texture->n_texture)
+		ft_error();
+	map->texture->s_img = mlx_texture_to_image(map->mlx, map->texture->s_texture);
+	if (!map->texture->n_texture)
+		ft_error();
+	map->texture->n_img = mlx_texture_to_image(map->mlx, map->texture->n_texture);
+	if (!map->texture->n_texture)
+		ft_error();
+	map->texture->e_img = mlx_texture_to_image(map->mlx, map->texture->e_texture);
+	if (!map->texture->n_texture)
+		ft_error();
+	map->texture->w_img = mlx_texture_to_image(map->mlx, map->texture->w_texture);
+	if (!map->texture->n_texture)
+		ft_error();
 }

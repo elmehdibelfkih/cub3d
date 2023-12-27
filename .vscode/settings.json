@@ -4,6 +4,7 @@
         "stddef.h": "c",
         "cub3d.h": "c",
         "__tree": "c",
-        "map": "c"
+        "map": "c",
+        "mlx42.h": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/23 17:48:34 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/27 22:50:49 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ int32_t	main(void)
 	t_map		map;
 	t_player	player;
 	t_mini_map	minimap;
-	mlx_t		*mlx;
-	t_ray		ray;
 	t_texture	texture;
+	t_ray		ray;
 	char		**ma;
 
 	ma = malloc(sizeof(char *) * 15);
@@ -44,21 +43,33 @@ int32_t	main(void)
 	ma[12] = ft_strdup("11110111 1110101 101111010001");
 	ma[13] = ft_strdup("11111111 1111111 111111111111");
 	ma[14] = NULL;
-	map.texture = &texture;
+	
 	map.map = ma;
+	map.texture = &texture;
+	map.player = &player;
+	map.mini_map = &minimap;
 	map.ray = &ray;
-	init_data(&map, &player, &minimap);
-	mlx = mlx_init(g_width, g_height, "cub3d", true);
-	if (!mlx)
+	g_width = 2100;
+	g_height = 1000;
+	g_clm = 1;
+	map.texture->n_path = "textures_l/Brick/Brick_01-512x512.png";
+	map.texture->s_path = "textures_l/Brick/Brick_01-512x512.png";
+	map.texture->e_path = "textures_l/Brick/Brick_01-512x512.png";
+	map.texture->w_path = "textures_l/Brick/Brick_01-512x512.png";
+	map.mlx = mlx_init(g_width, g_height, "cub3d", true);
+	if (!map.mlx)
 		ft_error();
-	map.mlx = mlx;
-	map.img = mlx_new_image(mlx, g_width, g_height);
-	if (!map.img || (mlx_image_to_window(mlx, map.img, 0, 0) < 0))
+
+	init_data(&map);
+
+	map.img = mlx_new_image(map.mlx, g_width, g_height);
+	if (!map.img || (mlx_image_to_window(map.mlx, map.img, 0, 0) < 0))
 		ft_error();
+
 	ray_caster(&map);
 	put_mini_map(&map);
-	mlx_loop_hook(mlx, ft_hook, (void *)&map);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_loop_hook(map.mlx, ft_hook, (void *)&map);
+	mlx_loop(map.mlx);
+	mlx_terminate(map.mlx);
 	return (EXIT_SUCCESS);
 }
