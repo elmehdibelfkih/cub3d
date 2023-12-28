@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/28 00:51:42 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 12:51:14 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_hook(void *param)
 void	window_update(t_map *map)
 {
 	if (map->mlx->width <= map->mini_map->map_width
-			|| map->mlx->height <= map->mini_map->map_height)
+		|| map->mlx->height <= map->mini_map->map_height)
 		return ;
 	g_width = map->mlx->width;
 	g_height = map->mlx->height;
@@ -106,22 +106,22 @@ void	init_data(t_map *map, char *av)
 {
 	map->mlx = mlx_init(g_width, g_height, "cub3d", true);
 	if (!map->mlx)
-	ft_error();
-	
-    check_extention(av);
-    read_file(av, map->info);
-    check_file( map->info, map);
-    check_map(map,  map->info);
-	map->block_size = 512;
+		ft_error();
+	check_extention(av);
+	read_file(av, map->info);
+	check_file(map->info, map);
+	check_map(map, map->info);
+	map->b_s = 512;
 	map->height = 14;
 	map->player->score = 0;
 	map->player->mv_speed = 30;
 	map->player->rt_speed = 1 * (M_PI / 180);
 	map->player->view_angle = 60 * (M_PI / 180);
-	map->player->x = (get_x(map->map, get_y(map->map)) * map->block_size) + (map->block_size / 2);
-	map->player->y = (get_y(map->map) * map->block_size) + (map->block_size / 2);
+	init_info(map);
+	map->player->x = (get_x(map->map,
+			get_y(map->map)) * map->b_s) + (map->b_s / 2);
+	map->player->y = (get_y(map->map) * map->b_s) + (map->b_s / 2);
 	map->map[get_y(map->map)][get_x(map->map, get_y(map->map))] = '0';
-	map->player->rad_current_view = 0;
 	map->mini_map->mini_block = 20;
 	map->mini_map->x = 8;
 	map->mini_map->y = 6;
@@ -133,30 +133,30 @@ void	init_data(t_map *map, char *av)
 
 void	init_textures(t_map *map)
 {
-	map->texture->s_texture =  mlx_load_png(map->info->SO_txt[1]);
+	map->texture->s_texture = mlx_load_png(map->info->so_txt[1]);
 	if (!map->texture->s_texture)
 		ft_error();
-	map->texture->e_texture =  mlx_load_png(map->info->EA_txt[1]);
+	map->texture->e_texture = mlx_load_png(map->info->ea_txt[1]);
 	if (!map->texture->e_texture)
 		ft_error();
-	map->texture->w_texture =  mlx_load_png(map->info->WE_txt[1]);
+	map->texture->w_texture = mlx_load_png(map->info->we_txt[1]);
 	if (!map->texture->w_texture)
 		ft_error();
-	map->texture->n_texture =  mlx_load_png(map->info->NO_txt[1]);
+	map->texture->n_texture = mlx_load_png(map->info->no_txt[1]);
 	if (!map->texture->n_texture)
 		ft_error();
-
-	map->texture->s_img = mlx_texture_to_image(map->mlx, map->texture->s_texture);
-	if (!map->texture->s_img)
-		ft_error();
-	map->texture->n_img = mlx_texture_to_image(map->mlx, map->texture->n_texture);
-	if (!map->texture->n_img)
-		ft_error();
-	map->texture->e_img = mlx_texture_to_image(map->mlx, map->texture->e_texture);
-	if (!map->texture->e_img)
-		ft_error();
-	map->texture->w_img = mlx_texture_to_image(map->mlx, map->texture->w_texture);
-	if (!map->texture->w_img)
-		ft_error();
-		// mlx_image_to_window(map->mlx, map->texture->w_img, 0, 0);
 }
+
+	// map->texture->s_img = mlx_texture_to_image(map->mlx, map->texture->s_texture);
+	// if (!map->texture->s_img)
+	// 	ft_error();
+	// map->texture->n_img = mlx_texture_to_image(map->mlx, map->texture->n_texture);
+	// if (!map->texture->n_img)
+	// 	ft_error();
+	// map->texture->e_img = mlx_texture_to_image(map->mlx, map->texture->e_texture);
+	// if (!map->texture->e_img)
+	// 	ft_error();
+	// map->texture->w_img = mlx_texture_to_image(map->mlx, map->texture->w_texture);
+	// if (!map->texture->w_img)
+	// 	ft_error();
+		// mlx_image_to_window(map->mlx, map->texture->w_img, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 11:21:16 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/27 23:02:59 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 11:56:56 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,16 @@ double	horizontal_ray_lenght(t_map *map, double angle, double cs, double sn)
 	int		y;
 
 	adjust(&x, &y, cs, sn);
-	map->ray->ya = map->player->y - ((int)map->player->y % map->block_size);
+	map->ray->ya = map->player->y - ((int)map->player->y % map->b_s);
 	if (sn > 0)
-		map->ray->ya += map->block_size;
+		map->ray->ya += map->b_s;
 	map->ray->xa = map->player->x
 		+ ((map->ray->ya - map->player->y) / tan(angle));
 	if (is_wall(map, map->ray->xa, map->ray->ya + y))
 		return (sqrt(pow(map->player->x - map->ray->xa, 2)
 				+ pow(map->player->y - map->ray->ya, 2)));
-	map->ray->d_x = map->block_size / tan(angle);
-	map->ray->d_y = map->block_size;
+	map->ray->d_x = map->b_s / tan(angle);
+	map->ray->d_y = map->b_s;
 	delta(map, cs, sn, 'h');
 	while (true)
 	{
@@ -91,16 +91,16 @@ double	vertical_ray_lenght(t_map *map, double angle, double cs, double sn)
 	int		y;
 
 	adjust(&x, &y, cs, sn);
-	map->ray->xa = map->player->x - ((int)map->player->x % map->block_size);
+	map->ray->xa = map->player->x - ((int)map->player->x % map->b_s);
 	if (cs > 0)
-		map->ray->xa += map->block_size;
+		map->ray->xa += map->b_s;
 	map->ray->ya = map->player->y
 		+ ((map->ray->xa - map->player->x) * tan(angle));
 	if (is_wall(map, map->ray->xa + x, map->ray->ya))
 		return (sqrt(pow(map->player->x - map->ray->xa, 2)
 				+ pow(map->player->y - map->ray->ya, 2)));
-	map->ray->d_x = map->block_size;
-	map->ray->d_y = map->block_size * tan(angle);
+	map->ray->d_x = map->b_s;
+	map->ray->d_y = map->b_s * tan(angle);
 	delta(map, cs, sn, 'v');
 	while (true)
 	{

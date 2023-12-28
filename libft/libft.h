@@ -6,19 +6,23 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 09:57:26 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/27 23:00:01 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 13:06:36 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include<stdlib.h>
-# include<unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <stddef.h>
+# include <fcntl.h>
 
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 20
+#  define BUFFER_SIZE 10
 # endif
+
 typedef struct s_list
 {
 	void			*content;

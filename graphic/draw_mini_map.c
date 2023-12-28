@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:12:29 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/28 00:01:15 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 11:56:56 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,16 @@ void	put_mini_map(t_map *map)
 		y = -1;
 		while (++y < map->mini_map->map_height)
 		{
-			x_p = map->player->x - (map->block_size * (map->mini_map->map_width
+			x_p = map->player->x - (map->b_s * (map->mini_map->map_width
 						/ 2 - x) / map->mini_map->mini_block);
-			y_p = map->player->y - (map->block_size * (map->mini_map->map_height
+			y_p = map->player->y - (map->b_s * (map->mini_map->map_height
 						/ 2 - y) / map->mini_map->mini_block);
 			if (is_wall(map, x_p, y_p) == 1)
 				mlx_put_pixel(map->img, x, y, 255);
-				// mlx_put_pixel(map->img, x, y, get_rgba(0, 0, 0, 255));
 			else if (is_wall(map, x_p, y_p) == 0)
 				mlx_put_pixel(map->img, x, y, 80);
-				// mlx_put_pixel(map->img, x, y, get_rgba(0, 0, 0, 80));
 			else
 				mlx_put_pixel(map->img, x, y, 0);
-				// mlx_put_pixel(map->img, x, y, get_rgba(0, 0, 0, 0));
 		}
 	}
 	put_der(map);
@@ -62,8 +59,8 @@ int	is_wall(t_map *map, double x, double y)
 	int	j;
 	int	i;
 
-	j = x / map->block_size;
-	i = y / map->block_size;
+	j = x / map->b_s;
+	i = y / map->b_s;
 	if (i < 0 || j < 0 || i >= map->height
 		|| j >= (int)ft_strlen(map->map[i]))
 		return (-1);
