@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/28 12:51:14 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 17:43:26 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	init_textures(t_map *map)
 	map->texture->n_texture = mlx_load_png(map->info->no_txt[1]);
 	if (!map->texture->n_texture)
 		ft_error();
+		// mlx_image_to_window(map->mlx, map->texture->w_img, 0, 0);
 }
 
 	// map->texture->s_img = mlx_texture_to_image(map->mlx, map->texture->s_texture);
@@ -159,4 +160,4 @@ void	init_textures(t_map *map)
 	// map->texture->w_img = mlx_texture_to_image(map->mlx, map->texture->w_texture);
 	// if (!map->texture->w_img)
 	// 	ft_error();
-		// mlx_image_to_window(map->mlx, map->texture->w_img, 0, 0);
+	// map->texture->e_texture.

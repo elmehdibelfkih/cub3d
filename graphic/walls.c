@@ -6,42 +6,37 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 08:43:54 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/28 12:27:42 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/29 02:47:16 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-int	get_rgba(int r, int g, int b, int a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
 
 int	is_nesw(double sn, double cs, int ver)
 {
 	if (sn <= 0 && cs >= 0)
 	{
 		if (ver)
-			return (63);
-		return (252);
+			return (63); // e
+		return (252); // n
 	}
 	else if (sn <= 0 && cs <= 0)
 	{
 		if (ver)
-			return (126);
-		return (252);
+			return (126); // w
+		return (252); // n
 	}
 	else if (sn >= 0 && cs <= 0)
 	{
 		if (ver)
-			return (126);
-		return (189);
+			return (126); // w
+		return (189); // s
 	}
 	else if (sn >= 0 && cs >= 0)
 	{
 		if (ver)
-			return (63);
-		return (189);
+			return (63); // e
+		return (189); // s
 	}
 	return (-1);
 }
@@ -70,6 +65,9 @@ void	walls(t_map *map, double len, double x_id, uint32_t color)
 	double		y_id;
 	int			i;
 	int			j;
+	int		pos;
+	int		y_pos;
+	int		tmp;
 
 	i = 0;
 	walllen = ((map->b_s / len) * map->pp);
@@ -86,15 +84,30 @@ void	walls(t_map *map, double len, double x_id, uint32_t color)
 	}
 	else
 	{
-		put_c(map, y_id, x_id, i);
 		while (i < g_clm && x_id + i < g_width)
 		{
+			put_c(map, y_id, x_id, i);
 			j = -1;
 			while (++j < walllen)
+			{
+				if (map->ray->ver == 1)
+				{
+					pos = (int)map->ray->ya % map->b_s + j;
+				}
+				else
+				{
+					pos = (int)map->ray->xa % map->b_s + j;
+					// printf("%d\n", pos);
+				}
+				y_pos = j * map->b_s / walllen;
+				tmp = (pos * y_pos) + pos;
+				printf("%d\n", tmp);
+				color = get_rgba(map->texture->e_texture->pixels[tmp + 0], map->texture->e_texture->pixels[tmp + 1], map->texture->e_texture->pixels[tmp + 2], map->texture->e_texture->pixels[tmp + 3]);
 				mlx_put_pixel(map->img, x_id + i, y_id + j, color);
+			}
 			i++;
+			put_f(map, len, x_id, i);
 		}
-		put_f(map, len, x_id, i);
 	}
 }
 

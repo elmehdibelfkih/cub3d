@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/28 12:56:03 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/28 20:01:47 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_mini_map
 
 typedef struct s_ray
 {
+	bool	ver;
 	double	xa;
 	double	ya;
 	double	d_x;
@@ -79,10 +80,6 @@ typedef struct s_texture
 	mlx_texture_t	*s_texture;
 	mlx_texture_t	*e_texture;
 	mlx_texture_t	*w_texture;
-	mlx_image_t		*n_img;
-	mlx_image_t		*s_img;
-	mlx_image_t		*e_img;
-	mlx_image_t		*w_img;
 }	t_texture;
 
 typedef struct s_map
@@ -104,55 +101,60 @@ typedef struct s_map
 
 }	t_map;
 
-void	put_mini_map(t_map *map);
-void	put_area(int x, int y, int size, mlx_image_t *img);
-void	put_der(t_map *map);
-void	player_update(t_map *map, int mv, int rt);
-int		is_wall(t_map *map, double x, double y);
-double	horizontal_ray_lenght(t_map *map, double angle, double cs, double sn);
-double	vertical_ray_lenght(t_map *map, double angle, double cs, double sn);
-double	ray_lenght(t_map *map, double angle, uint32_t *color);
-void	ray_caster(t_map *map);
-void	walls(t_map *map, double len, double x_id, uint32_t color);
-int		get_rgba(int r, int g, int b, int a);
-int		is_nesw(double sn, double cs, int ver);
-void	delta(t_map *map, double cs, double sn, char c);
-void	adjust(int *x, int *y, double cs, double sn);
-void	ft_speed(t_map *map, char c);
-void	run_game(t_map *map);
-void	ft_hook(void *param);
-void	init_data(t_map *map, char *av);
-void	window_update(t_map *map);
-void	ft_error(void);
-void	init_textures(t_map *map);
-void	put_c(t_map *map, double y_id, double x_id, int i);
-void	put_f(t_map *map, double len, double x_id, int i);
-void	init_info(t_map *vars);
-void	check_file(t_info *info, t_map *map);
-void	check_texture(t_info *info);
-void	check_colors(t_info *info, t_map *map);
-void	check_map(t_map *vars, t_info *info);
-void	set_map(t_map *vars, char **f_map);
-char	*get_spaces(int size);
-int		max_width(char **f_map, int start);
-int		is_digit(char *arr);
-void	start_map(t_info *info, char **f_map);
-int		height_map(t_info *info, char **f_map);
-int		valid_char(char **map);
-int		is_exist(char *str, int c);
-int		nbr_item(char *s, char c);
-void	ft_clearr(char **arr);
-void	free_txt(t_info *info);
-void	free_clr(t_info *info);
-void	free_all(t_info *info, char **map, char *msg);
-void	ft_puterr(char *str);
-int		get_y(char **map);
-int		get_x(char **map, int i);
-void	print_map(char **vars);
-void	height_file(char *av, t_info *info);
-void	read_file(char *av, t_info *info);
-void	check_extention(char *av);
-int		increment(char *line, char c);
-int		just_spaces(char *map_line);
+void		put_mini_map(t_map *map);
+void		put_area(int x, int y, int size, mlx_image_t *img);
+void		put_der(t_map *map);
+void		player_update(t_map *map, int mv, int rt);
+int			is_wall(t_map *map, double x, double y);
+double		horizontal_ray_lenght(t_map *map, double angle, double cs, double sn);
+double		vertical_ray_lenght(t_map *map, double angle, double cs, double sn);
+double		ray_lenght(t_map *map, double angle, uint32_t *color);
+void		ray_caster(t_map *map);
+void		walls(t_map *map, double len, double x_id, uint32_t color);
+uint32_t	get_rgba(int r, int g, int b, int a);
+int			is_nesw(double sn, double cs, int ver);
+void		delta(t_map *map, double cs, double sn, char c);
+void		adjust(int *x, int *y, double cs, double sn);
+void		ft_speed(t_map *map, char c);
+void		run_game(t_map *map);
+void		ft_hook(void *param);
+void		init_data(t_map *map, char *av);
+void		window_update(t_map *map);
+void		ft_error(void);
+void		init_textures(t_map *map);
+void		put_c(t_map *map, double y_id, double x_id, int i);
+void		put_f(t_map *map, double len, double x_id, int i);
+void		init_info(t_map *vars);
+void		check_file(t_info *info, t_map *map);
+void		check_texture(t_info *info);
+void		check_colors(t_info *info, t_map *map);
+void		check_map(t_map *vars, t_info *info);
+// void		set_map(t_map *vars, char **f_map);
+char		*get_spaces(int size);
+int			max_width(char **f_map, int start);
+int			is_digit(char *arr);
+void		start_map(t_info *info, char **f_map);
+int			height_map(t_info *info, char **f_map);
+int			valid_char(char **map);
+int			is_exist(char *str, int c);
+int			nbr_item(char *s, char c);
+void		ft_clearr(char **arr);
+void		free_txt(t_info *info);
+void		free_clr(t_info *info);
+void		free_all(t_info *info, char **map, char *msg);
+void		ft_puterr(char *str);
+int			get_y(char **map);
+int			get_x(char **map, int i);
+void		print_map(char **vars);
+void		height_file(char *av, t_info *info);
+void		read_file(char *av, t_info *info);
+void		check_extention(char *av);
+int			increment(char *line, char c);
+int			just_spaces(char *map_line);
+int			get_r(int rgba);
+int			get_g(int rgba);
+int			get_b(int rgba);
+int			get_a(int rgba);
+
 
 #endif
