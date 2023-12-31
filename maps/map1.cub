@@ -1,10 +1,13 @@
-NO ./textures_l/Brick/Brick_01-512x512.png
-SO ./textures_l/Brick/Brick_01-512x512.png
-WE ./textures_l/Brick/Brick_01-512x512.png
-EA ./textures_l/Brick/Brick_01-512x512.png
 
-F 225,30,60
-C 12,10,250
+
+NO ../textures_l/Brick/Brick_15-512x512.png
+SO ../textures_l/Stone/Stone_14-512x512.png
+WE ../textures_l/Wood/Wood_16-512x512.png
+EA ../textures_l/Stone/Stone_14-512x512.png
+
+
+F 112,128,144
+C 25,25,112
 
 11111111111111111111111111
 1E000000000110000000000001

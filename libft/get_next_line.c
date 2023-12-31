@@ -6,11 +6,11 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 08:05:25 by ybouchra          #+#    #+#             */
-/*   Updated: 2023/12/27 23:03:45 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/30 20:27:30 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "libft.h"
 
 char	*readall(char *saved, int fd)
 {
@@ -18,7 +18,7 @@ char	*readall(char *saved, int fd)
 	char	*buffer;
 
 	dr = 1;
-			buffer = malloc(BUFFER_SIZE + 1);
+	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
 	while (dr != 0 && !(ft_strchr(saved, '\n')))
