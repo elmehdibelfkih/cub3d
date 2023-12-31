@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 03:43:22 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 15:37:14 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void		delta(t_map *map, double cs, double sn, char c);
 void		adjust(int *x, int *y, double cs, double sn);
 void		run_game(t_map *map);
 void		ft_hook(void *param);
-void		init_data(t_map *map, char *av);
 void		window_update(t_map *map);
 void		ft_error(void);
 void		init_textures(t_map *map);
@@ -129,12 +128,11 @@ int			is_exist(char *str, int c);
 int			nbr_item(char *s, char c);
 void		ft_clearr(char **arr);
 void		free_txt(t_info *info);
-void		free_clr(t_info *info);
+void		free_info(t_info *info);
 void		free_all(t_info *info, char **map, char *msg);
 void		ft_puterr(char *str);
 int			get_y(char **map);
 int			get_x(char **map, int i);
-void		print_map(char **vars);
 void		height_file(char *av, t_info *info);
 void		read_file(char *av, t_info *info);
 void		check_extention(char *av);
@@ -143,5 +141,11 @@ int			just_spaces(char *map_line);
 uint32_t	get_color(t_map *map, double walllen, int j);
 uint32_t	pixel_color(t_map *map, int pos);
 void		put_wall(t_map *map, double len, double x_id, int i);
+void		read_map(t_info *info, t_map *vars);
+void		fill_map(t_info *info, char **map);
+void		check_items(t_info *info, char **map);
+void		map_border(t_info *info, char **map, int height);
+void		map_content(t_info *info, char **map);
+void		delete_tex(t_map *map);
 
 #endif

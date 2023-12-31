@@ -6,16 +6,19 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 03:49:27 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 16:05:56 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_error(void)
+void	check_map(t_map *vars, t_info *info)
 {
-	write(2, mlx_strerror(mlx_errno), ft_strlen(mlx_strerror(mlx_errno)));
-	exit(EXIT_FAILURE);
+	read_map(info, vars);
+	fill_map(info, vars->map);
+	check_items(info, vars->map);
+	map_border(info, vars->map, vars->height - 1);
+	map_content(info, vars->map);
 }
 
 void	run_game(t_map *map)
@@ -23,9 +26,20 @@ void	run_game(t_map *map)
 	ray_caster(map);
 	mlx_loop_hook(map->mlx, ft_hook, (void *)map);
 	mlx_loop(map->mlx);
+	delete_tex(map);
 	mlx_terminate(map->mlx);
-	free_clr(map->info);
+	free_info(map->info);
 	ft_clearr(map->map);
+}
+
+void	_parsing(char *av, t_map *map, t_info *info)
+{
+	check_extention(av);
+	read_file(av, info);
+	check_file(info, map);
+	check_map(map, info);
+	init_info(map);
+	init_textures(map);
 }
 
 int32_t	main(int ac, char **av)
@@ -46,7 +60,7 @@ int32_t	main(int ac, char **av)
 	map.info = &info;
 	map.ray = &ray;
 	ft_bzero(&info, sizeof(info));
-	init_data(&map, av[1]);
+	_parsing(av[1], &map, map.info);
 	map.img = mlx_new_image(map.mlx, g_width, g_height);
 	if (!map.img || (mlx_image_to_window(map.mlx, map.img, 0, 0) < 0))
 		ft_error();

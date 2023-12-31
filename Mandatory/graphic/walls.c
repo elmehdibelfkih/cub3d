@@ -6,40 +6,11 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 08:43:54 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 03:45:04 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 15:42:14 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-int	is_nesw(double sn, double cs, int ver)
-{
-	if (sn <= 0 && cs >= 0)
-	{
-		if (ver)
-			return ('e');
-		return ('n');
-	}
-	if (sn <= 0 && cs <= 0)
-	{
-		if (ver)
-			return ('w');
-		return ('n');
-	}
-	if (sn >= 0 && cs <= 0)
-	{
-		if (ver)
-			return ('w');
-		return ('s');
-	}
-	if (sn >= 0 && cs >= 0)
-	{
-		if (ver)
-			return ('e');
-		return ('s');
-	}
-	return (-1);
-}
 
 void	ray_caster(t_map *map)
 {

@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 10:15:00 by ybouchra          #+#    #+#             */
-/*   Updated: 2023/12/28 11:26:40 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 13:58:57 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,26 +95,38 @@ void	read_map(t_info *info, t_map *vars)
 	vars->height = height_map(info, info->file);
 	if (info->items != 6)
 	{
-		free_clr(info);
+		free_info(info);
 		ft_puterr("Error: Wrong Order !!");
 	}
 	if (!vars->height)
 	{
-		free_clr(info);
+		free_info(info);
 		ft_puterr("Error: Empty Map !!");
 	}
 	vars->map = malloc(sizeof(char *) * (vars->height + 1));
 	if (!vars->map)
 	{
-		free_clr(info);
+		free_info(info);
 		ft_puterr("Error: Allocation Failed !!");
 	}
 }
 
-void	check_map(t_map *vars, t_info *info)
+void	map_border(t_info *info, char **map, int height)
 {
-	read_map(info, vars);
-	fill_map(info, vars->map);
-	check_items(info, vars->map);
-	map_content(info, vars->map);
+	int	i;
+	int	j;
+
+	j = -1;
+	i = -1;
+	while (map[0][++j])
+	{
+		if (map[0][j] != '1' && map[0][j] != ' ')
+			free_all(info, map, "Error: Map Not Sourounded !!");
+	}
+	j = -1;
+	while (map[height][++j])
+	{
+		if (map[height][j] != '1' && map[height][j] != ' ')
+			free_all(info, map, "Error: Map Not Sourounded !!");
+	}
 }

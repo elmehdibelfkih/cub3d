@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybouchra <ybouchra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 10:02:39 by ybouchra          #+#    #+#             */
-/*   Updated: 2023/12/28 12:43:16 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/30 04:08:27 by ybouchra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	start_map(t_info *info, char **f_map)
 {
 	int	i;
 
-	i = -1;
-	while (f_map[++i])
+	i = 0;
+	while (f_map[i])
 	{
 		if (!ft_strncmp(f_map[i], "NO ", 3) || !ft_strncmp(f_map[i], "SO ", 3)
 			|| !ft_strncmp(f_map[i], "WE ", 3)
@@ -33,11 +33,11 @@ void	start_map(t_info *info, char **f_map)
 			info->items++;
 		}
 		else if (!f_map[i][0] || f_map[i][0] == '\t' || f_map[i][0] == '\n'
-				|| f_map[i][0] == '\v' || f_map[i][0] == '\r'
-					|| just_spaces(f_map[i]))
+				|| f_map[i][0] == '\r' || just_spaces(f_map[i]))
 			info->start++;
 		else
 			return ;
+		i++;
 	}
 }
 

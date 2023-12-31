@@ -6,16 +6,11 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 11:21:16 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 03:29:53 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 15:42:44 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-uint32_t	get_rgba(int r, int g, int b, int a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
 
 uint32_t	get_color(t_map *map, double walllen, int j)
 {

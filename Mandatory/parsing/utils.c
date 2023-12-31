@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 07:40:45 by ybouchra          #+#    #+#             */
-/*   Updated: 2023/12/30 20:19:31 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 13:56:28 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ int	increment(char *line, char c)
 		return (1);
 	else
 		return (2);
-}
-
-void	ft_puterr(char *str)
-{
-	while (*str)
-		write(2, str++, 1);
-	write(2, "\n", 2);
-	exit(1);
 }
 
 int	is_exist(char *str, int c)

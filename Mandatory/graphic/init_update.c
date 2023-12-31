@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/30 20:17:29 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 15:32:34 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,6 @@ void	player_update(t_map *map, int mv, int rt)
 	ray_caster(map);
 }
 
-void	init_data(t_map *map, char *av)
-{
-	map->mlx = mlx_init(g_width, g_height, "cub3d", true);
-	if (!map->mlx)
-		ft_error();
-	check_extention(av);
-	read_file(av, map->info);
-	check_file(map->info, map);
-	check_map(map, map->info);
-	map->b_s = 512;
-	map->player->mv_speed = 70;
-	map->player->rt_speed = 3 * (M_PI / 180);
-	map->player->view_angle = 60 * (M_PI / 180);
-	init_info(map);
-	map->player->x = (get_x(map->map,
-				get_y(map->map)) * map->b_s) + (map->b_s / 2);
-	map->player->y = (get_y(map->map) * map->b_s) + (map->b_s / 2);
-	map->map[get_y(map->map)][get_x(map->map, get_y(map->map))] = '0';
-	map->pp = (g_width / 2) / tan(map->player->view_angle / 2);
-	init_textures(map);
-}
-
 void	init_textures(t_map *map)
 {
 	map->texture->s_texture = mlx_load_png(map->info->so_txt[1]);
@@ -105,14 +83,14 @@ void	init_textures(t_map *map)
 	map->texture->n_texture = mlx_load_png(map->info->no_txt[1]);
 	if (!map->texture->n_texture)
 		ft_error();
-	if (map->texture->e_texture->height != 512
-		|| map->texture->e_texture->height != 512
-		|| map->texture->e_texture->height != 512
-		|| map->texture->e_texture->height != 512
-		|| map->texture->e_texture->width != 512
-		|| map->texture->e_texture->width != 512
-		|| map->texture->e_texture->width != 512
-		|| map->texture->e_texture->width != 512)
+	if (map->texture->e_texture->height != 128
+		|| map->texture->e_texture->height != 128
+		|| map->texture->e_texture->height != 128
+		|| map->texture->e_texture->height != 128
+		|| map->texture->e_texture->width != 128
+		|| map->texture->e_texture->width != 128
+		|| map->texture->e_texture->width != 128
+		|| map->texture->e_texture->width != 128)
 	{
 		mlx_errno = MLX_INVPNG;
 		ft_error();

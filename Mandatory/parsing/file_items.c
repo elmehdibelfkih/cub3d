@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 06:54:48 by ybouchra          #+#    #+#             */
-/*   Updated: 2023/12/28 12:52:14 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 13:52:11 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,22 +88,4 @@ void	check_file(t_info *info, t_map *map)
 	split_items(info);
 	check_texture(info);
 	check_colors(info, map);
-}
-
-void	height_file(char *av, t_info *info)
-{
-	char	*line;
-
-	line = NULL;
-	info->fd = open(av, O_RDONLY, 0777);
-	if (info->fd == -1)
-		ft_puterr("Error: File Not Found");
-	line = get_next_line(info->fd);
-	while (line)
-	{
-		info->height++;
-		free(line);
-		line = get_next_line(info->fd);
-	}
-	close(info->fd);
 }

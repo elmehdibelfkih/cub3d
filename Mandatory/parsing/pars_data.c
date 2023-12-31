@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 06:09:06 by ybouchra          #+#    #+#             */
-/*   Updated: 2023/12/28 12:52:14 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 13:52:11 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_colors(t_info *info, char **arr, int tab[3])
 		else
 		{
 			ft_clearr(arr);
-			free_clr(info);
+			free_info(info);
 			ft_puterr("Error: Invalid Data Colors !!");
 		}
 	}
@@ -34,7 +34,7 @@ void	init_colors(t_info *info, char **arr, int tab[3])
 	{
 		if (tab[i] < 0 || tab[i] > 255)
 		{
-			free_clr(info);
+			free_info(info);
 			ft_puterr("Error: Invalid Data Colors !!");
 		}
 	}
@@ -48,14 +48,14 @@ void	pars_rgb(t_info *info, char *data_color, int tab[3])
 	if (!data_color || ft_strlen(data_color) > 11
 		|| nbr_item(data_color, ',') != 2)
 	{
-		free_clr(info);
+		free_info(info);
 		ft_puterr("Error: Invalid Data Colors ! !");
 	}
 	arr = ft_split(data_color, ',');
 	if (!arr || !arr[0] || !arr[1] || !arr[2] || arr[3])
 	{
 		ft_clearr(arr);
-		free_clr(info);
+		free_info(info);
 		ft_puterr("Error: Invalid Data Colors !!");
 	}
 	init_colors(info, arr, tab);
@@ -80,7 +80,7 @@ void	check_colors(t_info *info, t_map *map)
 	if (!info->c_colors[0] || !info->f_colors[0]
 		|| info->f_colors[2] || info->c_colors[2])
 	{
-		free_clr(info);
+		free_info(info);
 		ft_puterr("Error: Invalid Data Colors !!");
 	}
 	else
