@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 18:49:58 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 21:35:34 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	run_game(t_map *map)
 	mlx_loop(map->mlx);
 	delete_tex(map);
 	mlx_terminate(map->mlx);
-	free_info(map->info);
-	ft_clearr(map->map);
+	free_all(map->info, map->map, "");
 }
 
 void	_parsing(char *av, t_map *map, t_info *info)
