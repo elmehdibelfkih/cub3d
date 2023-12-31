@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 11:21:16 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 14:06:08 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 17:20:33 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,16 +127,15 @@ double	ray_lenght(t_map *map, double angle)
 		* cos(map->player->rad_current_view - angle);
 	vertical = vertical_ray_len(map, angle, cs, sn)
 		* cos(map->player->rad_current_view - angle);
+	if ((long)horizontal == (long)vertical)
+		return (horizontal);
 	if (horizontal > vertical)
 	{
 		map->ray->ver = 1;
 		map->ray->nswe = is_nesw(sn, cs, 1);
 		return (vertical);
 	}
-	else
-	{
-		map->ray->ver = 0;
-		map->ray->nswe = is_nesw(sn, cs, 0);
-		return (horizontal);
-	}
+	map->ray->ver = 0;
+	map->ray->nswe = is_nesw(sn, cs, 0);
+	return (horizontal);
 }

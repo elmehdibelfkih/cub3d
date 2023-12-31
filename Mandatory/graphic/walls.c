@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 08:43:54 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 15:42:14 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 16:43:34 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ int	is_wall(t_map *map, double x, double y)
 	i = y / map->b_s;
 	if (i < 0 || j < 0 || i >= map->height
 		|| j >= (int)ft_strlen(map->map[i]))
-		return (-1);
+		return (1);
 	if (map->map[i][j] == '1')
 		return (1);
 	else if (map->map[i][j] == '0')
 		return (0);
-	return (-1);
+	return (1);
 }

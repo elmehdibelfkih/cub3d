@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 15:37:14 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 16:51:44 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_ray
 	int		nswe;
 	int		x;
 	int		y;
+
 }	t_ray;
 
 typedef struct s_texture

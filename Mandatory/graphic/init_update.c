@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 15:32:34 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 16:46:37 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	ft_hook(void *param)
 	map = param;
 	if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(map->mlx);
-	if (mlx_is_key_down(map->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(map->mlx, 265) || mlx_is_key_down(map->mlx, 87))
 		player_update(map, 1, 0);
-	if (mlx_is_key_down(map->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(map->mlx, 264) || mlx_is_key_down(map->mlx, 83))
 		player_update(map, -1, 0);
-	if (mlx_is_key_down(map->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(map->mlx, 263) || mlx_is_key_down(map->mlx, 65))
 		player_update(map, 0, -1);
-	if (mlx_is_key_down(map->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(map->mlx, 262) || mlx_is_key_down(map->mlx, 68))
 		player_update(map, 0, 1);
 	if (map->mlx->width != g_width || map->mlx->height != g_height)
 		window_update(map);

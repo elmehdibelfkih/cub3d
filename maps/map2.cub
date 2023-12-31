@@ -1,9 +1,9 @@
 
 
-NO ./textures_l/Brick/Brick_15-512x512.png
-SO ./textures_l/Stone/Stone_14-512x512.png
-WE ./textures_l/Wood/Wood_16-512x512.png
-EA ./textures_l/Stone/Stone_14-512x512.png
+NO ./textures_l/1.png
+SO ./textures_l/5.png
+WE ./textures_l/2.png
+EA ./textures_l/1.png
 
 
 F 112,128,144
