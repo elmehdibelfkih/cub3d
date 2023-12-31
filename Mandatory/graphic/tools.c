@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 15:41:16 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 15:43:34 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 18:31:18 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,12 @@ uint32_t	get_rgba(int r, int g, int b, int a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void	ft_error(void)
+void	ft_error(t_map *map)
 {
 	write(2, mlx_strerror(mlx_errno), ft_strlen(mlx_strerror(mlx_errno)));
+	mlx_close_window(map->mlx);
+	mlx_terminate(map->mlx);
+	free_info(map->info);
+	ft_clearr(map->map);
 	exit(EXIT_FAILURE);
 }

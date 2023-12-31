@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 03:00:06 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 16:51:44 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 17:54:49 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void		adjust(int *x, int *y, double cs, double sn);
 void		run_game(t_map *map);
 void		ft_hook(void *param);
 void		window_update(t_map *map);
-void		ft_error(void);
+void		ft_error(t_map *map);
 void		init_textures(t_map *map);
 void		put_c(t_map *map, double y_id, double x_id, int i);
 void		put_f(t_map *map, double len, double x_id, int i);

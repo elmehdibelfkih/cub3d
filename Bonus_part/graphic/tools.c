@@ -6,15 +6,19 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 15:51:17 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 16:04:36 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 18:46:22 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bonus_cub3d.h"
 
-void	ft_error(void)
+void	ft_error(t_map *map)
 {
 	write(2, mlx_strerror(mlx_errno), ft_strlen(mlx_strerror(mlx_errno)));
+	free_info(map->info);
+	ft_clearr(map->map);
+	mlx_close_window(map->mlx);
+	mlx_terminate(map->mlx);
 	exit(EXIT_FAILURE);
 }
 
@@ -62,4 +66,14 @@ void	init_view(t_map *map)
 uint32_t	get_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
+}
+
+void	exit_c(t_map *map)
+{
+	delete_tex(map);
+	mlx_close_window(map->mlx);
+	mlx_terminate(map->mlx);
+	ft_clearr(map->map);
+	free_info(map->info);
+	exit(EXIT_SUCCESS);
 }

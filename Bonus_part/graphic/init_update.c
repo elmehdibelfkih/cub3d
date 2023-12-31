@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 16:09:31 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 18:44:30 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_hook(void *param)
 
 	map = param;
 	if (mlx_is_key_down(map->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(map->mlx);
+		exit_c(map);
 	if (mlx_is_key_down(map->mlx, 265) || mlx_is_key_down(map->mlx, 87))
 		player_update(map, 1, 0);
 	if (mlx_is_key_down(map->mlx, 264) || mlx_is_key_down(map->mlx, 83))
@@ -49,7 +49,7 @@ void	window_update(t_map *map)
 	mlx_delete_image(map->mlx, map->img);
 	map->img = mlx_new_image(map->mlx, g_width, g_height);
 	if (!map->img || (mlx_image_to_window(map->mlx, map->img, 0, 0) < 0))
-		ft_error();
+		ft_error(map);
 	player_update(map, 0, 0);
 }
 
@@ -113,16 +113,16 @@ void	init_textures(t_map *map)
 {
 	map->s_texture = mlx_load_png(map->info->so_txt[1]);
 	if (!map->s_texture)
-		ft_error();
+		ft_error(map);
 	map->e_texture = mlx_load_png(map->info->ea_txt[1]);
 	if (!map->e_texture)
-		ft_error();
+		ft_error(map);
 	map->w_texture = mlx_load_png(map->info->we_txt[1]);
 	if (!map->w_texture)
-		ft_error();
+		ft_error(map);
 	map->n_texture = mlx_load_png(map->info->no_txt[1]);
 	if (!map->n_texture)
-		ft_error();
+		ft_error(map);
 	if (map->e_texture->height != 512
 		|| map->e_texture->height != 512
 		|| map->e_texture->height != 512
@@ -133,6 +133,6 @@ void	init_textures(t_map *map)
 		|| map->e_texture->width != 512)
 	{
 		mlx_errno = MLX_INVPNG;
-		ft_error();
+		ft_error(map);
 	}
 }

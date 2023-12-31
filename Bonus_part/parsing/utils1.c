@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 00:14:21 by ybouchra          #+#    #+#             */
-/*   Updated: 2023/12/31 16:04:59 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 18:01:53 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	init_info(t_map *map)
 {
 	map->mlx = mlx_init(g_width, g_height, "cub3d", true);
 	if (!map->mlx)
-		ft_error();
+		ft_error(map);
 	map->b_s = 512;
 	map->height = 14;
 	map->player->mv_speed = 40;

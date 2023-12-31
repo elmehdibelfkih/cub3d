@@ -6,7 +6,7 @@
 /*   By: ebelfkih <ebelfkih@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 20:24:35 by ebelfkih          #+#    #+#             */
-/*   Updated: 2023/12/31 16:09:44 by ebelfkih         ###   ########.fr       */
+/*   Updated: 2023/12/31 18:42:11 by ebelfkih         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int32_t	main(int ac, char **av)
 	t_info		info;
 	t_ray		ray;
 
-	g_width = 2100;
-	g_height = 1000;
+	g_width = 1800;
+	g_height = 900;
 	g_clm = 1;
 	if (ac != 2)
 		return (write(2, "Error: incorrect syntax", 24), EXIT_FAILURE);
@@ -64,7 +64,7 @@ int32_t	main(int ac, char **av)
 	_parsing(av[1], &map, map.info);
 	map.img = mlx_new_image(map.mlx, g_width, g_height);
 	if (!map.img || (mlx_image_to_window(map.mlx, map.img, 0, 0) < 0))
-		ft_error();
+		ft_error(&map);
 	run_game(&map);
 	return (EXIT_SUCCESS);
 }
